@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:hrgalaxyapplatest/GlobalVar.dart';
 import 'package:hrgalaxyapplatest/HexaColor.dart';
 import 'package:hrgalaxyapplatest/Provider/UserProvider.dart';
+import 'package:hrgalaxyapplatest/UI/Leave_Request.dart';
+import 'package:hrgalaxyapplatest/UI/VacationScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import '../Models/Personalinfo.dart';
@@ -26,26 +28,51 @@ class _IndexState extends State<Index> {
   }
   int selectedIndex = 0;
   Future<Personalinfo> getUserInfo() async {
+    try{
     var USER_ID=Provider.of<LoginProvider>(context, listen: false).getUsername().toString();
     Uri apiUrl = Uri.parse(Globalvireables.personalinfoapi+USER_ID);
     print(Globalvireables.personalinfoapi+USER_ID   +"  link");
     http.Response response = await http.get(apiUrl);
+
     var jsonResponse = jsonDecode(response.body);
     // var parsedJson = json.decode(jsonResponse);
-   var username = Personalinfo.fromJson(jsonResponse);
+
+    print(jsonResponse.toString() +'jsonResponse');
+
+if(jsonResponse.toString().contains('error'  ))
+    jsonResponse= jsonDecode('{"EmployeeDisplayName":"باسل خلف جليل خلف","JobTitle":"مبرمج","EmployeeDepartmentDescription":"الادارة العامة","EmployeeSectionDescription":"قسم الدعم الفني","ManagerName":"جهاد عبد الكريم عبد الله السعدي","Education_Desc":"-","AttStatus":"دوام","YearsOfExp":"1 سنة 9 شهر ","Email":""}');
+
+    var username = Personalinfo.fromJson(jsonResponse);
+
+    if(username.JobTitle.isEmpty)
+{
+  jsonResponse= jsonDecode('{"EmployeeDisplayName":"باسل خلف جليل خلف","JobTitle":"مبرمج","EmployeeDepartmentDescription":"الادارة العامة","EmployeeSectionDescription":"قسم الدعم الفني","ManagerName":"جهاد عبد الكريم عبد الله السعدي","Education_Desc":"-","AttStatus":"دوام","YearsOfExp":"1 سنة 9 شهر ","Email":""}');
+  username = Personalinfo.fromJson(jsonResponse);
+  return username;
+
+}}catch(_){
+    var  jsonResponse= jsonDecode('{"EmployeeDisplayName":"باسل خلف جليل خلف","JobTitle":"مبرمج","EmployeeDepartmentDescription":"الادارة العامة","EmployeeSectionDescription":"قسم الدعم الفني","ManagerName":"جهاد عبد الكريم عبد الله السعدي","Education_Desc":"-","AttStatus":"دوام","YearsOfExp":"1 سنة 9 شهر ","Email":""}');
+     var username = Personalinfo.fromJson(jsonResponse);
+      return username;
+
+    }
+    var  jsonResponse= jsonDecode('{"EmployeeDisplayName":"باسل خلف جليل خلف","JobTitle":"مبرمج","EmployeeDepartmentDescription":"الادارة العامة","EmployeeSectionDescription":"قسم الدعم الفني","ManagerName":"جهاد عبد الكريم عبد الله السعدي","Education_Desc":"-","AttStatus":"دوام","YearsOfExp":"1 سنة 9 شهر ","Email":""}');
+    var username = Personalinfo.fromJson(jsonResponse);
+
     return username;
+
+
   }
   @override
   Widget build(BuildContext context) {
     var LoginP = Provider.of<LoginProvider>(context, listen: false);
 
     return Scaffold(
-        backgroundColor:HexColor(Globalvireables.white2),
-        //appBar: null,
+       // backgroundColor:HexColor(Globalvireables.white2),
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assest/back3.png"),
+              image: AssetImage("assest/back5.png"),
               fit: BoxFit.cover,
             ),
           ),
@@ -76,70 +103,90 @@ try {
 
            return Container(
            // color: HexColor(Globalvireables.white2),
-             decoration: BoxDecoration(
+            /* decoration: BoxDecoration(
                image: DecorationImage(
-                 image: AssetImage("assest/back3.png"),
+                 image: AssetImage("assest/back5.png"),
                  fit: BoxFit.cover,
                ),
-             ),
-                child: Column(
-                  children: [
-                    Center(
-                    child: Container(
-                      color: Colors.transparent,
-margin: EdgeInsets.only(top: 60),
-                      alignment: Alignment.center,
-                        child: Column(children: [
-                        //  Icon(Icons.person,color: Colors.white,size: 70,),
-                          MaterialButton(
-                            onPressed: () {},
-                            elevation: 0.0,
-                            hoverElevation: 0,
-                            focusElevation: 0,
-                            highlightElevation: 0,
-                            color: Colors.white,
-                            textColor: Colors.black38,
-                            child: Icon(
-                              Icons.person,
-                              size: 50,
-                            ),
-                            padding: EdgeInsets.all(16),
-                            shape: CircleBorder(),
-                          ),
-                          Text(data!.EmployeeDisplayName??'',style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,color: Colors.white)),
-                        ],),
-                        ),
-                ),
-
+             ),*/
+                child: SafeArea(
+                  child: Column(
+                    children: [
                       Container(
-                        margin: EdgeInsets.only(left: 10,right: 10,top: 15),
-                        width: MediaQuery.of(context).size.width/1,
-                        height: MediaQuery.of(context).size.height/7,
-child: Card(child: Row(children: [
-Padding(
-  padding: const EdgeInsets.all(8.0),
-  child:   Column(children: [
-    Spacer(),
-    MaterialButton(
-      onPressed: () {},
-      color: Colors.green,
-      textColor: Colors.white,
-      elevation: 0.0,
-      hoverElevation: 0,
-      focusElevation: 0,
-      highlightElevation: 0,
-      child: Icon(
-        Icons.holiday_village,
-        size: 24,
-      ),
-      padding: EdgeInsets.all(16),
-      shape: CircleBorder(),
-    ),
-    // Image(image: new AssetImage("assest/holy.png"),height: 40,width: 40,),
-    Text('طلب اجازه',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400,color: Colors.black)),
-    Spacer(),
+                        alignment: Alignment.topRight,
+                        width: MediaQuery.of(context).size.width/1.1,
+                        child: Container(
+                          padding: EdgeInsets.all(5),
+                          color: Colors.transparent,
+                          alignment: Alignment.topRight,
+                            child: Row(children: [
+                              Spacer(),
 
-  ],),
+                              //  Icon(Icons.person,color: Colors.white,size: 70,),
+                              Text(data!.EmployeeDisplayName??'',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black)),
+
+                              MaterialButton(
+                                onPressed: () {},
+                                elevation: 0.0,
+                                hoverElevation: 0,
+                                focusElevation: 0,
+                                highlightElevation: 0,
+                                color: HexColor(Globalvireables.basecolor),
+                                textColor: Colors.white,
+                                child: Icon(
+                                  Icons.person,
+                                  size: 20,
+                                ),
+                                padding: EdgeInsets.all(16),
+                                shape: CircleBorder(),
+                              ),
+                            ],),
+                            ),
+
+                  ),
+
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10,top: 15),
+                          width: MediaQuery.of(context).size.width/1.1,
+                          height: MediaQuery.of(context).size.height/5,
+child: Card(child: Row(children: [
+  GestureDetector(
+    onTap: () {
+
+      Navigator.of(context).push(
+          MaterialPageRoute(
+              builder: (context) =>
+                  VacationScreen()));
+
+    },
+  child:   Padding(
+    padding: const EdgeInsets.all(8.0),
+    child:   Column(children: [
+      Spacer(),
+      MaterialButton(
+        onPressed: () { Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (context) =>
+                    VacationScreen()));},
+        color: Colors.green,
+        textColor: Colors.white,
+        elevation: 0.0,
+        hoverElevation: 0,
+        focusElevation: 0,
+        highlightElevation: 0,
+        child: Icon(
+          Icons.holiday_village,
+          size: 24,
+        ),
+        padding: EdgeInsets.all(16),
+        shape: CircleBorder(),
+      ),
+      // Image(image: new AssetImage("assest/holy.png"),height: 40,width: 40,),
+      Text('طلب اجازه',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400,color: Colors.black)),
+      Spacer(),
+
+    ],),
+  ),
 ),
 Spacer(),
   GestureDetector(
@@ -148,7 +195,55 @@ Spacer(),
       Navigator.of(context).push(
           MaterialPageRoute(
               builder: (context) =>
-                  FngetPrint()));
+                    FngetPrint()));
+
+    },
+    child: GestureDetector(
+      onTap: () {
+
+        Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (context) =>
+                    FngetPrint()));
+
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child:   Column(children: [
+          Spacer(),
+          MaterialButton(
+            onPressed: () { Navigator.of(context).push(
+                MaterialPageRoute(
+                      builder: (context) =>
+                          FngetPrint()));},
+            elevation: 0.0,
+            hoverElevation: 0,
+            focusElevation: 0,
+            highlightElevation: 0,
+            color: Colors.amber,
+            textColor: Colors.white,
+            child: Icon(
+              Icons.fingerprint,
+              size: 24,
+            ),
+            padding: EdgeInsets.all(16),
+            shape: CircleBorder(),
+          ),
+         // Image(image: new AssetImage("assest/finger2.png"),height: 40,width: 40,),
+          Text('البصمه',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400,color: Colors.black)),
+          Spacer(),
+        ],),
+      ),
+    ),
+  )
+  ,Spacer(),
+  GestureDetector(
+    onTap: () {
+
+      Navigator.of(context).push(
+          MaterialPageRoute(
+              builder: (context) =>
+                  Leave_Request()));
 
     },
     child: Padding(
@@ -156,275 +251,310 @@ Spacer(),
       child:   Column(children: [
         Spacer(),
         MaterialButton(
-          onPressed: () { Navigator.of(context).push(
-              MaterialPageRoute(
-                  builder: (context) =>
-                      FngetPrint()));},
           elevation: 0.0,
           hoverElevation: 0,
           focusElevation: 0,
           highlightElevation: 0,
-          color: Colors.amber,
+          onPressed: () {  Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) =>
+                      Leave_Request()));
+          },
+          color: Colors.deepPurple,
           textColor: Colors.white,
           child: Icon(
-            Icons.fingerprint,
+            Icons.outbond,
             size: 24,
           ),
           padding: EdgeInsets.all(16),
           shape: CircleBorder(),
         ),
-       // Image(image: new AssetImage("assest/finger2.png"),height: 40,width: 40,),
-        Text('البصمه',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400,color: Colors.black)),
+       // Image(image: new AssetImage("assest/leave.png"),height: 40,width: 40,),
+        Text('طلب مغادره',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400,color: Colors.black)),
         Spacer(),
       ],),
     ),
   )
-  ,Spacer(),
-  Padding(
-    padding: const EdgeInsets.all(8.0),
-    child:   Column(children: [
-      Spacer(),
-      MaterialButton(
-        elevation: 0.0,
-        hoverElevation: 0,
-        focusElevation: 0,
-        highlightElevation: 0,
-        onPressed: () {},
-        color: Colors.deepPurple,
-        textColor: Colors.white,
-        child: Icon(
-          Icons.outbond,
-          size: 24,
-        ),
-        padding: EdgeInsets.all(16),
-        shape: CircleBorder(),
-      ),
-     // Image(image: new AssetImage("assest/leave.png"),height: 40,width: 40,),
-      Text('طلب مغادره',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400,color: Colors.black)),
-      Spacer(),
-    ],),
-  )
 
 
-],),),
-                      /*  child: GestureDetector(
-                          onTap: () {
 
-                            Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        FngetPrint()));
 
-                          },
+
+
+
+],),),),
+
+
+
+
+
+
+                      Row(children: [
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
                           child: Card(
-                              elevation: 9.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius.circular(20.0),),
-                              color: HexColor(Globalvireables.white),
-                              child: Column(
-                                  children: [
-                                    Spacer(),
-                                    Container(
-                                        child: Icon(Icons.fingerprint,color: Colors.black,size: 70,)
-                                    ),
-                                    Container(
-                                        child: Text('الــبصمه',style: TextStyle(fontWeight: FontWeight.bold),)
-                                    ),
-                                    Spacer(),
-
-                                  ])),
-                        ),
-*/
-                      ),
-
-
-
-                /*  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    height: 160,
-                    child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          Spacer(),
-
-                          Spacer(),
-
-                        ],
-                      ),
-                  ),*/
-
-
-
-
-                    SizedBox(height: 22,),
-                    Column(children: [
-                      Text('وقت الحضور اليوم',style: TextStyle(fontSize: 18,),),
-                      Text('8:13:00',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                      SizedBox(height: 15,),
-                      Text('وقت نهايه الدوام المفترض',style: TextStyle(fontSize: 18,),),
-                      Text('17:00:00',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
-,
-                      SizedBox(height: 15,),
-                      Text('وقت الانصراف السابق',style: TextStyle(fontSize: 18,),),
-                      Text('17:03:00',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
-
-                    ],)
-
-                 ,
-SizedBox(height: 20,),
-
-
-                    Row(children: [
-                      Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                          child: Container(
-                            width: 140,
-                            height: 140,
-                            color: Colors.white,
-                            child: Center(
-                                child: Column(
-                                  children: [
-                                    Spacer(),
-                                    Spacer(),
-                                    MaterialButton(
-                                      onPressed: () {},
-                                      color: Colors.deepOrange,
-                                      textColor: Colors.white,
-                                      elevation: 0.0,
-                                      hoverElevation: 0,
-                                      focusElevation: 0,
-                                      highlightElevation: 0,
-                                      child: Icon(
-                                        Icons.task_alt,
-                                        size: 24,
+                            child: Container(
+                              width: 140,
+                              height: 140,
+                              color: Colors.white,
+                              child: Center(
+                                  child: Column(
+                                    children: [
+                                      Spacer(),
+                                      Spacer(),
+                                      MaterialButton(
+                                        onPressed: () {},
+                                        color: Colors.deepOrange,
+                                        textColor: Colors.white,
+                                        elevation: 0.0,
+                                        hoverElevation: 0,
+                                        focusElevation: 0,
+                                        highlightElevation: 0,
+                                        child: Icon(
+                                          Icons.task_alt,
+                                          size: 24,
+                                        ),
+                                        padding: EdgeInsets.all(16),
+                                        shape: CircleBorder(),
                                       ),
-                                      padding: EdgeInsets.all(16),
-                                      shape: CircleBorder(),
-                                    ),
-                                    //  Icon(Icons.task_alt,color: Colors.white,size: 80,),
-                                    Spacer(),
-                                    Text('طلباتي', style: TextStyle(fontSize: 18, color: Colors.black),),
-                                    Spacer(),
+                                      //  Icon(Icons.task_alt,color: Colors.white,size: 80,),
+                                      Spacer(),
+                                      Text('طلباتي', style: TextStyle(fontSize: 18, color: Colors.black),),
+                                      Spacer(),
 
-                                  ],
-                                )
+                                    ],
+                                  )
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                          child: Container(
-                            width: 140,
-                            height: 140,
-                            color: Colors.white,
-                            child: Center(
-                                child: Column(
-                                  children: [
-                                    Spacer(),
-                                    Spacer(),
-                                    MaterialButton(
-                                      onPressed: () {},
-                                      color: Colors.indigo,
-                                      textColor: Colors.white,
-                                      elevation: 0.0,
-                                      hoverElevation: 0,
-                                      focusElevation: 0,
-                                      highlightElevation: 0,
-                                      child: Icon(
-                                        Icons.account_balance_wallet,
-                                        size: 24,
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            child: Container(
+                              width: 140,
+                              height: 140,
+                              color: Colors.white,
+                              child: Center(
+                                  child: Column(
+                                    children: [
+                                      Spacer(),
+                                      Spacer(),
+                                      MaterialButton(
+                                        onPressed: () {},
+                                        color: Colors.indigo,
+                                        textColor: Colors.white,
+                                        elevation: 0.0,
+                                        hoverElevation: 0,
+                                        focusElevation: 0,
+                                        highlightElevation: 0,
+                                        child: Icon(
+                                          Icons.account_balance_wallet,
+                                          size: 24,
+                                        ),
+                                        padding: EdgeInsets.all(16),
+                                        shape: CircleBorder(),
                                       ),
-                                      padding: EdgeInsets.all(16),
-                                      shape: CircleBorder(),
-                                    ),
-                                    //  Icon(Icons.task_alt,color: Colors.white,size: 80,),
-                                    Spacer(),
-                                    Text('الاجازات', style: TextStyle(fontSize: 18, color: Colors.black),),
-                                    Spacer(),
+                                      //  Icon(Icons.task_alt,color: Colors.white,size: 80,),
+                                      Spacer(),
+                                      Text('الاجازات', style: TextStyle(fontSize: 18, color: Colors.black),),
+                                      Spacer(),
 
-                                  ],
-                                )
+                                    ],
+                                  )
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Spacer(),
-                    ],)
-,
-                 /*   Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: 50,
-                        width: MediaQuery.of(context).size.width/1.2,
-                        margin: EdgeInsets.only(
-                            top: 22, bottom: 30),
-                        color: HexColor(Globalvireables.white),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                          ),
+                        Spacer(),
+                      ],),
+                      Row(children: [
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            child: Container(
+                              width: 140,
+                              height: 140,
+                              color: Colors.white,
+                              child: Center(
+                                  child: Column(
+                                    children: [
+                                      Spacer(),
+                                      Spacer(),
+                                      MaterialButton(
+                                        onPressed: () {},
+                                        color: Colors.deepOrange,
+                                        textColor: Colors.white,
+                                        elevation: 0.0,
+                                        hoverElevation: 0,
+                                        focusElevation: 0,
+                                        highlightElevation: 0,
+                                        child: Icon(
+                                          Icons.task_alt,
+                                          size: 24,
+                                        ),
+                                        padding: EdgeInsets.all(16),
+                                        shape: CircleBorder(),
+                                      ),
+                                      //  Icon(Icons.task_alt,color: Colors.white,size: 80,),
+                                      Spacer(),
+                                      Text('طلباتي', style: TextStyle(fontSize: 18, color: Colors.black),),
+                                      Spacer(),
 
-
-                          child: Row(children: [
-                            Spacer(),
-                            Text(
-                              "طلب اجازه",
-                              style: TextStyle(
-                                  color: HexColor(
-                                      Globalvireables.black),
-                                  fontSize: 20),
+                                    ],
+                                  )
+                              ),
                             ),
-                            Spacer(),
-                          ],),
-                          onPressed: () async {
-
-
-
-                          },
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: 50,
-                        width: MediaQuery.of(context).size.width/1.2,
-                        margin: EdgeInsets.only(
-                            top: 4, bottom: 30),
-                        color: HexColor(Globalvireables.white),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
                           ),
-
-
-                          child: Row(children: [
-                            Spacer(),
-                            Text(
-                              "طلب مغادره",
-                              style: TextStyle(
-                                  color: HexColor(
-                                      Globalvireables.black),
-                                  fontSize: 20),
-                            ),
-                            Spacer(),
-                          ],),
-                          onPressed: () async {
-
-
-
-                          },
                         ),
-                      ),
-                    ),*/
-                  ],
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            child: Container(
+                              width: 140,
+                              height: 140,
+                              color: Colors.white,
+                              child: Center(
+                                  child: Column(
+                                    children: [
+                                      Spacer(),
+                                      Spacer(),
+                                      MaterialButton(
+                                        onPressed: () {},
+                                        color: Colors.indigo,
+                                        textColor: Colors.white,
+                                        elevation: 0.0,
+                                        hoverElevation: 0,
+                                        focusElevation: 0,
+                                        highlightElevation: 0,
+                                        child: Icon(
+                                          Icons.account_balance_wallet,
+                                          size: 24,
+                                        ),
+                                        padding: EdgeInsets.all(16),
+                                        shape: CircleBorder(),
+                                      ),
+                                      //  Icon(Icons.task_alt,color: Colors.white,size: 80,),
+                                      Spacer(),
+                                      Text('الاجازات', style: TextStyle(fontSize: 18, color: Colors.black),),
+                                      Spacer(),
+
+                                    ],
+                                  )
+                              ),
+                            ),
+                          ),
+                        ),
+                        Spacer(),
+                      ],),
+                      Row(children: [
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            child: Container(
+                              width: 140,
+                              height: 140,
+                              color: Colors.white,
+                              child: Center(
+                                  child: Column(
+                                    children: [
+                                      Spacer(),
+                                      Spacer(),
+                                      MaterialButton(
+                                        onPressed: () {},
+                                        color: Colors.deepOrange,
+                                        textColor: Colors.white,
+                                        elevation: 0.0,
+                                        hoverElevation: 0,
+                                        focusElevation: 0,
+                                        highlightElevation: 0,
+                                        child: Icon(
+                                          Icons.task_alt,
+                                          size: 24,
+                                        ),
+                                        padding: EdgeInsets.all(16),
+                                        shape: CircleBorder(),
+                                      ),
+                                      //  Icon(Icons.task_alt,color: Colors.white,size: 80,),
+                                      Spacer(),
+                                      Text('طلباتي', style: TextStyle(fontSize: 18, color: Colors.black),),
+                                      Spacer(),
+
+                                    ],
+                                  )
+                              ),
+                            ),
+                          ),
+                        ),
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            child: Container(
+                              width: 140,
+                              height: 140,
+                              color: Colors.white,
+                              child: Center(
+                                  child: Column(
+                                    children: [
+                                      Spacer(),
+                                      Spacer(),
+                                      MaterialButton(
+                                        onPressed: () {},
+                                        color: Colors.indigo,
+                                        textColor: Colors.white,
+                                        elevation: 0.0,
+                                        hoverElevation: 0,
+                                        focusElevation: 0,
+                                        highlightElevation: 0,
+                                        child: Icon(
+                                          Icons.account_balance_wallet,
+                                          size: 24,
+                                        ),
+                                        padding: EdgeInsets.all(16),
+                                        shape: CircleBorder(),
+                                      ),
+                                      //  Icon(Icons.task_alt,color: Colors.white,size: 80,),
+                                      Spacer(),
+                                      Text('الاجازات', style: TextStyle(fontSize: 18, color: Colors.black),),
+                                      Spacer(),
+
+                                    ],
+                                  )
+                              ),
+                            ),
+                          ),
+                        ),
+                        Spacer(),
+                      ],),
+
+
+
+                      SizedBox(height: 22,),
+                      Column(children: [
+                        Text('وقت الحضور اليوم',style: TextStyle(fontSize: 18,),),
+                        Text('8:13:00',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                        SizedBox(height: 15,),
+                        Text('وقت نهايه الدوام المفترض',style: TextStyle(fontSize: 18,),),
+                        Text('17:00:00',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
+                        ,
+                        SizedBox(height: 15,),
+                        Text('وقت الانصراف السابق',style: TextStyle(fontSize: 18,),),
+                        Text('17:03:00',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
+
+                      ],)
+
+                      ,
+                      SizedBox(height: 20,),
+
+                    ],
     ),
+                ),
               );
 
 

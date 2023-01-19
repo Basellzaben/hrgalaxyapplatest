@@ -53,10 +53,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your application.
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+        primaryColor: HexColor(Globalvireables.basecolor),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );

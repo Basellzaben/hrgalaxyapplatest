@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late List<BiometricType> availableBiometrics;
   var RE=false;
 
-  
+  final auth = LocalAuthentication();
   @override
   void initState() {
     // TODO: implement initState
@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     super.initState();
   }
-  
+  bool authorized = false;
   @override
   void dispose() {
     super.dispose();
@@ -71,9 +71,6 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                   children:[
-
-
-
                     Container(
                       margin: EdgeInsets.only(top: 30),
                       width: MediaQuery.of(context).size.width/1,
@@ -86,10 +83,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             Center(
                               child: Container(
-                                  margin: EdgeInsets.only(top: 15),
-                                  width: MediaQuery.of(context).size.width/2.6,
-                                  height: MediaQuery.of(context).size.width/2.6,
-                                  child: Image(image: new AssetImage("assest/galaxylogo.png"))
+                       margin: EdgeInsets.only(top: 15),
+                        width: MediaQuery.of(context).size.width/2.6,
+                         height: MediaQuery.of(context).size.width/2.6,
+                         child: Image(image: new AssetImage("assest/galaxylogo.png"))
                               ),
                             ),
 
@@ -114,44 +111,73 @@ Spacer(),
                                       style: TextStyle(
                                           color: HexColor(
                                               Globalvireables.black),
-                                          fontSize: 20),
+                                          fontSize: 15),
                                     ),
                                     Spacer(),
                                     Icon(Icons.fingerprint,color: Colors.black,)
                                   ],),
                                   onPressed: () async {
-                                    FocusScope.of(context).unfocus();
+    FocusScope.of(context).unfocus();
 
     prefs = await SharedPreferences.getInstance();
-    if (prefs.getBool('rememberme')) {
-      setproviders();
-                                    final isAuthenticated = await LocalAuthApi.authenticate();
-
-                                    if (isAuthenticated) {
-                                       Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) => Home(),
-                                    ));}else{
-
-                                      Fluttertoast.showToast(
-                                          msg: 'ليس لديك الصلاحيات للدخول',
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.BOTTOM,
-                                          textColor: Colors.white,
-                                          fontSize: 16.0);
+    if (prefs.getBool('rememberme')??false) {
+    setproviders();
 
 
-                                    }
-                                    }else{
-      Fluttertoast.showToast(
-          msg: 'ليس لديك الصلاحيات للدخول',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          textColor: Colors.white,
-          fontSize: 16.0);
-                                    }
+    bool authenticated = false;
+    if(Platform.isAndroid){
+    try {
+    authenticated = await auth.authenticateWithBiometrics(
+    localizedReason: "Scan your finger to authenticate",
+    useErrorDialogs: true,
+    stickyAuth: true);
+    } on PlatformException catch (e) {
+    print(e.toString() +" rerrr");
+    }
+    if (authenticated) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(
+    builder: (context) => Home(),
+    ));}else{
 
-                                  },
+    Fluttertoast.showToast(
+    msg: 'ليس لديك الصلاحيات للدخول',
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.BOTTOM,
+    textColor: Colors.white,
+    fontSize: 16.0);
+
+
+    }
+    }else
+   {
+     final isAuthenticated = await LocalAuthApi.authenticate();
+
+     if (isAuthenticated) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(
+    builder: (context) => Home(),
+    ));}else{
+
+    Fluttertoast.showToast(
+    msg: 'ليس لديك الصلاحيات للدخول',
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.BOTTOM,
+    textColor: Colors.white,
+    fontSize: 16.0);
+
+
+    }}
+    }else{
+    Fluttertoast.showToast(
+    msg: 'ليس لديك الصلاحيات للدخول',
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.BOTTOM,
+    textColor: Colors.white,
+    fontSize: 16.0);
+    }
+    }
+
                                 ),
                               ),
                             ),
@@ -177,13 +203,10 @@ Spacer(),
                                     border: OutlineInputBorder(),
                                     focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: HexColor(
-                                                Globalvireables
-                                                    .basecolor),
+                                            color: HexColor(Globalvireables.basecolor),
                                             width: 0.0),
                                         borderRadius:
-                                        BorderRadius.circular(
-                                            10.0)),
+                                        BorderRadius.circular(10.0)),
                                     enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Colors.black,
@@ -191,11 +214,8 @@ Spacer(),
                                         borderRadius:
                                         BorderRadius.circular(
                                             10.0)),
-                                    contentPadding: EdgeInsets.only(
-                                        top: 18,
-                                        bottom: 18,
-                                        right: 20,
-                                        left: 20),
+                                    contentPadding:
+                            EdgeInsets.only(top: 18,bottom: 18,right: 20,left: 20),
                                     fillColor: Colors.white,
                                     filled: true,
                                     hintText: 'رقـم الموظف',
@@ -326,51 +346,73 @@ Spacer(),
     );
   }
   Login(BuildContext context) async {
-    FocusScope.of(context).unfocus();
-    showLoaderDialog(context);
-    var LoginP = Provider.of<LoginProvider>(context, listen: false);
+    try {
+      FocusScope.of(context).unfocus();
 
-    Uri apiUrl = Uri.parse(Globalvireables.loginapi);
-    final json = {
-      "User_ID": _emailController.text,
-      "User_Password": _passController.text
-    };
+      showLoaderDialog(context);
+      var LoginP = Provider.of<LoginProvider>(context, listen: false);
 
-    http.Response response = await http.post(apiUrl, body: json).whenComplete(() => {
-      Navigator.pop(context),
-    FocusScope.of(context).unfocus()
+      Uri apiUrl = Uri.parse(Globalvireables.loginapi);
+      final json = {
+        "User_ID": _emailController.text,
+        "User_Password": _passController.text
+      };
 
-    });
-    var jsonResponse =await jsonDecode(response.body);
-    print(response.statusCode.toString()+" response.statusCode");
-    if(response.statusCode==200){
-      if(jsonResponse.toString().contains('1')){
-        RememberFun(check);
-        setState(() {
-          Provider.of<LoginProvider>(context,listen: false).setPassword(_passController.text.toString());
-          Provider.of<LoginProvider>(context,listen: false).setUsername(_emailController.text.toString());
-          Provider.of<LoginProvider>(context,listen: false).setRemember(check);
+      http.Response response = await http.post(apiUrl, body: json)
+          .whenComplete(() =>
+      {
+        Navigator.pop(context),
+
+      }).catchError(() {
+        Navigator.pop(context);
+        Fluttertoast.showToast(
+            msg: 'تاكد من اتصال الانترنت',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      });
+      var jsonResponse = await jsonDecode(response.body);
+      print(response.statusCode.toString() + " response.statusCode");
+      if (response.statusCode == 200) {
+        if (jsonResponse.toString().contains('1')) {
+          RememberFun(check);
+          setState(() {
+            Provider.of<LoginProvider>(context, listen: false).setPassword(
+                _passController.text.toString());
+            Provider.of<LoginProvider>(context, listen: false).setUsername(
+                _emailController.text.toString());
+            Provider.of<LoginProvider>(context, listen: false).setRemember(
+                check);
           });
 
-           Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home(),));
-
-      }else{
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => Home(),));
+        } else {
+          Fluttertoast.showToast(
+              msg: 'رقم الموظف او كلمه المرور خطا',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              textColor: Colors.white,
+              fontSize: 16.0);
+        }
+      } else {
         Fluttertoast.showToast(
-            msg: 'رقم الموظف او كلمه المرور خطا',
+            msg: 'تاكد من اتصال الانترنت',
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             textColor: Colors.white,
             fontSize: 16.0);
       }
-    }else{
+    }catch(_){
+      Navigator.pop(context);
       Fluttertoast.showToast(
-          msg: 'تاكد من اتصال الانترنت',
+          msg: 'رقم الموظف او كلمه المرور خطا',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           textColor: Colors.white,
           fontSize: 16.0);
     }
-
   }
 
   RememberFun(bool check) async {
@@ -408,11 +450,11 @@ Spacer(),
     AlertDialog alert = AlertDialog(
       content: new Row(
         children: [
-          Image.asset('assest/loading.gif', height: 100, width: MediaQuery.of(context).size.width/3),
-          //CircularProgressIndicator(),
-          Container(
+          Image.asset('assest/loading.gif', height: 100, width: MediaQuery.of(context).size.width/3)
+          , Container(
               margin: EdgeInsets.only(left: 7),
-              child: Text("جار تسجيل الدخول...")),
+              child: Text("...جار تسجيل الدخول")
+          ),
         ],
       ),
     );

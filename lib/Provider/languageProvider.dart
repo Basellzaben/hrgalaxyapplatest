@@ -16,6 +16,23 @@ class Language extends ChangeNotifier {
     notifyListeners();
   }
 
+   TextDirection getDirection(){
+    String languageCode = getLanguage();//Platform.localeName.split('_')[0];
+
+    if(languageCode == "AR")
+      return TextDirection.rtl;
+    return TextDirection.ltr;
+
+  }
+   Alignment Align(){
+    // String languageCode = Platform.localeName.split('_')[0];
+    String languageCode = getLanguage();//Platform.localeName.split('_')[0];
+
+    if(languageCode == "AR")
+      return Alignment.topRight;
+    return Alignment.topLeft;
+
+  }
   String Llanguage(String l) {
 String txt='';
     getLanguage() == 'AR'? txt= ar[l].toString():txt= en[l].toString();
@@ -26,6 +43,8 @@ String txt='';
   static Map<String , Object?>  ar={
     "language":"اللغه العربيه"
     ,"settings":"الاعدادات"
+    ,"basel":"باسل خلف الزبن"
+    ,"wanttologout":"هل تريد تسجيل الخروج ؟"
     ,"finget":"استخدام البصمة"
     ,"username":"اسم المستخدم"
     ,"password":"رمز المرور"
@@ -75,8 +94,10 @@ String txt='';
   static Map<String , Object?>  en={
     "username":"username "
     ,"password":"password"
+    ,"wanttologout":"Are you sure you want to logout?؟"
     ,"settings":"Settings"
     ,"login":"LogIn"
+    ,"basel":"basel khalaf alzaben"
     ,"finget":"fingerprint use"
     ,"profile":"profile"
     ,"timeimprint":"time imprint"

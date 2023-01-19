@@ -103,11 +103,33 @@ setLan(newValue??'Ar');
           trailing:  GestureDetector(
     onTap: () {
 
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-        builder: (context) => LoginScreen(),
-      ), (Route<dynamic> route) => false);
 
-    },child: Icon(Icons.login_outlined))
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(lang.Llanguage('wanttologout')),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                  builder: (context) => LoginScreen(),
+                ), (Route<dynamic> route) => false);
+
+              },
+              child: Text('نعم'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: Text('لا'),
+            ),
+          ],
+        ),
+      );
+
+
+    },child: Icon(Icons.login_outlined,color: Colors.red,))
       ),
 
 

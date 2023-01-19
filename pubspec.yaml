@@ -47,6 +47,12 @@ dependencies:
       ref: v1.0.0
   geolocator: ^9.0.2
   geocoding: ^2.0.5
+  convex_bottom_bar: ^3.1.0+1
+  image_picker:
+    git:
+      url: https://github.com/cpboyd/plugins.git
+      ref: ios-no-permissions
+      path: packages/image_picker/image_picker
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -88,6 +94,7 @@ flutter:
     - assest/man.png
     - assest/leave.png
     - assest/back4.png
+    - assest/back5.png
 
   # assets:
   #   - images/a_dot_burr.jpeg

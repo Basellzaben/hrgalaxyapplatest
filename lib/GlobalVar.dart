@@ -14,6 +14,7 @@ class Globalvireables {
   static String black="#000000";
   static String black2="#191919";
 
+
   //Api's
   static String loginapi="http://10.0.1.60:8020/api/User/CheckUser";
   static String personalinfoapi="http://10.0.1.60:8020/api/EmployeeInfo/GetEmployeePersonalInfo/";

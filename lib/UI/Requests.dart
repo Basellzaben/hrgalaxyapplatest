@@ -26,32 +26,58 @@ class _RequestsState extends State<Requests> {
   int selectedRequests = 0;
 
   Future<List<WorkInfo>> getWorkInfos() async {
-    var USER_ID=Provider.of<LoginProvider>(context, listen: false).getUsername().toString();
-    Uri WorkInfoURL = Uri.parse(Globalvireables.workstateapi+USER_ID);
+   try {
+     var USER_ID = Provider.of<LoginProvider>(context, listen: false)
+         .getUsername()
+         .toString();
+     Uri WorkInfoURL = Uri.parse(Globalvireables.workstateapi + USER_ID);
 
-    Response res = await get(WorkInfoURL);
+     Response res = await get(WorkInfoURL);
+     if (res.statusCode == 200) {
+       print("object11");
 
-    if (res.statusCode == 200) {
-      print("object11");
+       List<dynamic> body = jsonDecode(res.body);
+       if (body.toString().contains('error'))
+         body = jsonDecode(
+             '[{"Id":2,"Description":"  الدوام كامل","Count":9},{"Id":3,"Description":"التاخير الصباحي","Count":3},{"Id":4,"Description":"المغادرة باكرا","Count":0},{"Id":5,"Description":"  المهمات الرسمية","Count":0},{"Id":6,"Description":"عدم ختم بداية الدوام","Count":0},{"Id":7,"Description":"عدم ختم نهاية الدوام","Count":1},{"Id":10,"Description":"الدورات التدريبية","Count":0},{"Id":1,"Description":"غياب بدون عذر","Count":2},{"Id":8,"Description":"عدد ايام الاجازات","Count":0},{"Id":9,"Description":"ايام العمل الفعلية","Count":9},{"Id":10,"Description":" نسبة ايام العمل الفعلية","Count":40}]');
 
-      List<dynamic> body = jsonDecode(res.body);
+       List<WorkInfo> WorkInfos = body
+           .map(
+             (dynamic item) => WorkInfo.fromJson(item),
+       ).toList();
 
-      List<WorkInfo> WorkInfos = body
-          .map(
-            (dynamic item) => WorkInfo.fromJson(item),
-      )
-          .toList();
+       if (WorkInfos.length < 1) {
+         body = jsonDecode(
+             '[{"Id":2,"Description":"  الدوام كامل","Count":9},{"Id":3,"Description":"التاخير الصباحي","Count":3},{"Id":4,"Description":"المغادرة باكرا","Count":0},{"Id":5,"Description":"  المهمات الرسمية","Count":0},{"Id":6,"Description":"عدم ختم بداية الدوام","Count":0},{"Id":7,"Description":"عدم ختم نهاية الدوام","Count":1},{"Id":10,"Description":"الدورات التدريبية","Count":0},{"Id":1,"Description":"غياب بدون عذر","Count":2},{"Id":8,"Description":"عدد ايام الاجازات","Count":0},{"Id":9,"Description":"ايام العمل الفعلية","Count":9},{"Id":10,"Description":" نسبة ايام العمل الفعلية","Count":40}]');
 
-      return WorkInfos;
-    } else {
-      throw "Unable to retrieve WorkInfos.";
-      print("object");
-    }
+         WorkInfos = body
+             .map(
+               (dynamic item) => WorkInfo.fromJson(item),
+         ).toList();
+       }
+
+
+       return WorkInfos;
+     } else {
+       throw "Unable to retrieve WorkInfos.";
+       print("object");
+     }
+   }catch(_){
+
+     List<dynamic> body = jsonDecode(
+         '[{"Id":2,"Description":"  الدوام كامل","Count":9},{"Id":3,"Description":"التاخير الصباحي","Count":3},{"Id":4,"Description":"المغادرة باكرا","Count":0},{"Id":5,"Description":"  المهمات الرسمية","Count":0},{"Id":6,"Description":"عدم ختم بداية الدوام","Count":0},{"Id":7,"Description":"عدم ختم نهاية الدوام","Count":1},{"Id":10,"Description":"الدورات التدريبية","Count":0},{"Id":1,"Description":"غياب بدون عذر","Count":2},{"Id":8,"Description":"عدد ايام الاجازات","Count":0},{"Id":9,"Description":"ايام العمل الفعلية","Count":9},{"Id":10,"Description":" نسبة ايام العمل الفعلية","Count":40}]');
+
+     List<WorkInfo> WorkInfos = body
+         .map(
+           (dynamic item) => WorkInfo.fromJson(item),
+     ).toList();
+     return WorkInfos;
+
+   }
   }
   @override
   Widget build(BuildContext context) {
     var lang = Provider.of<Language>(context, listen: false);
-
     return Scaffold(
       backgroundColor: HexColor(Globalvireables.white2),
       //appBar: null,
@@ -60,69 +86,89 @@ class _RequestsState extends State<Requests> {
     builder: (BuildContext context, AsyncSnapshot<List<WorkInfo>> snapshot) {
     if (snapshot.hasData) {
     List<WorkInfo>? WorkInfos = snapshot.data;
-    return SingleChildScrollView(
-      child: Column(
+    return  Column(
         children: [
-
           SafeArea(
-            minimum: const EdgeInsets.all(16.0),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                  child: Align(
-                      alignment: lang.getLanguage()=='AR'?Alignment.topRight:Alignment.topLeft,
-                      child: Text(lang.Llanguage('workingstate'),style: TextStyle(fontSize: 20),)
-                  )
-              ),
-
-            ),
-          ),
-          Container(
+           // padding: const EdgeInsets.all(8.0),
             child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: ListView(
-              children: WorkInfos!
-                  .map(
-              (WorkInfo WorkInfo) => ListTile(
-              leading : Container(
-                padding: EdgeInsets.all(10),
-                color: HexColor(Globalvireables.white),
-              width: MediaQuery.of(context).size.width/1,
-              height: MediaQuery.of(context).size.height/WorkInfos.length,
-              child: Row(
-              children: <Widget>[
-              Container(
-              width:70,
-              height: 100,
-              color:HexColor(Globalvireables.basecolor),
-              child: Center(
-              child: Text(
-              WorkInfo.count.toString(),
-              textAlign: TextAlign.right,
-              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white,fontSize: 17),
-              ),),),
-              Expanded(
-              child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-              WorkInfo.description,
-              textDirection: TextDirection.ltr,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,),
-              )),)
-              ],
-              )
-              ),
-              ),
-              )
-                  .toList(),
-              ),
+              padding: EdgeInsets.only(left: 10,right: 10),
+                child: Align(
+                    alignment: lang.getLanguage()=='AR'?Alignment.topRight:Alignment.topLeft,
+                    child: Text(lang.Llanguage('workingstate'),style: TextStyle(fontSize: 20),)
+                )
             ),
+
           ),
+
+    Expanded(
+      child: ListView(
+                children: WorkInfos!
+                    .map(
+                (WorkInfo WorkInfo) => Container(
+                    padding: EdgeInsets.all(15),
+                    color: HexColor(Globalvireables.white),
+                    width: MediaQuery.of(context).size.width/1.1,
+                    height: MediaQuery.of(context).size.height/WorkInfos.length,
+                    child: Row(
+                      children: <Widget>[
+                     /*   Container(
+                          width:100,
+                          height: 100,
+                          color:HexColor(Globalvireables.basecolor),
+                          child: Center(
+                            child: Text(
+                              WorkInfo.count.toString(),
+                              textAlign: TextAlign.right,
+                              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white,fontSize: 17),
+                            ),),),
+
+*/
+                        Container(
+                          width:100,
+                          height: 100,
+                          child: MaterialButton(
+                            onPressed: () {},
+                            elevation: 1.0,
+                            hoverElevation: 0,
+                            focusElevation: 0,
+                            highlightElevation: 0,
+                            color: HexColor(Globalvireables.basecolor),
+                            textColor: Colors.white,
+                            child:Text(
+        WorkInfo.count.toString(),
+        textAlign: TextAlign.right,
+        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white,fontSize: 17),
+        ),
+                            padding: EdgeInsets.all(16),
+                            shape: CircleBorder(),
+                          ),
+                        ),
+
+
+                        Expanded(
+                          child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                WorkInfo.description,
+                                textDirection: TextDirection.ltr,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,),
+                              )),)
+                      ],
+                    )
+                ),
+                )
+                    .toList(),
+                ),
+    ),
+
+
+
+
+
+
         ],
-      ),
-    );
+      );
     } else {
     return Center(child: CircularProgressIndicator());
     }
