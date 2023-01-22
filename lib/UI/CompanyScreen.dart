@@ -19,7 +19,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HexColor(Globalvireables.white2),
+     // backgroundColor: HexColor(Globalvireables.white2),
       body: Center(
         child: Column(children: [
           Center(

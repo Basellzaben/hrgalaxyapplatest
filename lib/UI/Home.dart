@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:hrgalaxyapplatest/GlobalVar.dart';
 import 'package:hrgalaxyapplatest/HexaColor.dart';
 import 'package:hrgalaxyapplatest/UI/Settings.dart';
+import 'package:provider/provider.dart';
 
+import '../Provider/languageProvider.dart';
 import 'Index.dart';
 import 'Profile.dart';
 import 'Requests.dart';
@@ -31,6 +33,8 @@ class _HomeState extends State<Home> {
   ];
   @override
   Widget build(BuildContext context) {
+    var LanguageProvider = Provider.of<Language>(context, listen: false);
+
     return Scaffold(
         backgroundColor: Colors.transparent,
         //appBar: null,
@@ -43,28 +47,28 @@ class _HomeState extends State<Home> {
 
         selectedItemColor: HexColor(Globalvireables.basecolor),
         unselectedItemColor: Colors.grey,
-        backgroundColor: Colors.white,
+        backgroundColor:HexColor(Globalvireables.white),
         items: [
           BottomNavigationBarItem(
             icon:  Icon(Icons.home,color: selectedIndex==0? HexColor(Globalvireables.basecolor):Colors.grey
               ,size:selectedIndex==0?21:26 ,),
-            label: 'الرئيسية'),
+            label: LanguageProvider.Llanguage('Home')),
 
           BottomNavigationBarItem(
             icon:  Icon(Icons.remove_from_queue,color: selectedIndex==1? HexColor(Globalvireables.basecolor):Colors.grey
               ,size:selectedIndex==1?21:26 ,),
-            label: 'حاله الدوام',
+            label: LanguageProvider.Llanguage('workingstate'),
 
           ),
           BottomNavigationBarItem(
             icon:  Icon(Icons.person,color: selectedIndex==2? HexColor(Globalvireables.basecolor):Colors.grey
               ,size:selectedIndex==2?21:26 ,),
-            label: 'الملف الشخصي',
+            label: LanguageProvider.Llanguage('profile'),
           ),
           BottomNavigationBarItem(
             icon:  Icon(Icons.settings,color: selectedIndex==3?HexColor(Globalvireables.basecolor): Colors.grey
               ,size:selectedIndex==3?21:26 ,),
-            label:'الاعدادات',
+            label:LanguageProvider.Llanguage('settings'),
 
           ),
         ],

@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:hrgalaxyapplatest/GlobalVar.dart';
 import 'package:hrgalaxyapplatest/HexaColor.dart';
 import 'package:hrgalaxyapplatest/Provider/LoginProvider.dart';
+import 'package:hrgalaxyapplatest/Provider/ThemeProvider.dart';
+import 'package:month_year_picker/month_year_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Provider/LocationProvider.dart';
 import 'Provider/UserProvider.dart';
 import 'Provider/languageProvider.dart';
@@ -15,13 +17,20 @@ bool Remember = false;
 String username = 'nn';
 String password = 'nn';
 
-void main() {
-   runApp(MultiProvider(
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<Language>(create: (_) => Language()),
       ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
       ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
       ChangeNotifierProvider<LocationProvider>(create: (_) => LocationProvider()),
+      ChangeNotifierProvider<ThemeProvider>(
+              create: (_) => ThemeProvider(
+                   false
+            )
+          ),
 
     ],
     child: const MyApp(),
@@ -48,13 +57,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SetLanguage(context);
-    return MaterialApp(
+    final themep = context.watch<ThemeProvider>();
 
+    return MaterialApp(
+      localizationsDelegates: [
+        GlobalWidgetsLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        MonthYearPickerLocalizations.delegate,
+      ],
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: HexColor(Globalvireables.basecolor),
-      ),
+      theme: themep.getTheme,
+      darkTheme: themep.darkTheme,
+
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }

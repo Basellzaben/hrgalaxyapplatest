@@ -39,10 +39,16 @@ String txt='';
     return txt;
   }
 
-
   static Map<String , Object?>  ar={
-    "language":"اللغه العربيه"
+    "language":"اللغه العربيه",
+    "previoustime":"وقت الانصراف السابق",
+  "sickleave":"مرضيه"
+    ,"company":"المؤسسة"
+    ,"Attendancetoday":"وقت الحضور اليوم"
     ,"settings":"الاعدادات"
+    ,"Home":"الرئيسية"
+    ,"annual":"سنوية"
+    ,"vacations":"رصيد الاجازات"
     ,"basel":"باسل خلف الزبن"
     ,"wanttologout":"هل تريد تسجيل الخروج ؟"
     ,"finget":"استخدام البصمة"
@@ -50,8 +56,12 @@ String txt='';
     ,"password":"رمز المرور"
     ,"login":"تسجيل الدخول"
     ,"profile":"الملف الشخصي"
+    ,"defaultend":"'وقت نهايه الدوام المفترض'"
+
+    ,"light":"فاتح"
+    ,"dark":"الوضع الليلي"
     ,"timeimprint":"بصمة الدوام"
-    ,"workingstate":"حالة الدوام"
+    ,"workingstate":"الدوام"
     ,"Logout":"تسجيل الخروج"
     ,"log":" جار تسجيل الدخول يرجى الانتظار"
     ,"logerror":" رقم المستخدم او رمز المرور خطأ"
@@ -89,11 +99,26 @@ String txt='';
     ,"Order":"طلب"
     ,"requesttype":"نوع الطلب"
     ,"request":"الطلب"
+    ,"request":"طلب اجازه"
+    ,"fingett":"البصمة"
+    ,"myrequest":"طلباتي"
 
   };
+
   static Map<String , Object?>  en={
     "username":"username "
+    ,"defaultend":"default end time"
     ,"password":"password"
+    ,"fingett":"finger print",
+  "sickleave":"sickleave",
+  "previoustime":"previous dismissal time",
+  "myrequest":"My Request"
+    ,"vacations":"vacations"
+    ,"company":"Enterprise"
+
+    ,"Attendancetoday":"Attendance time today"
+    ,"annual":"annual"
+    ,"Home":"Home"
     ,"wanttologout":"Are you sure you want to logout?؟"
     ,"settings":"Settings"
     ,"login":"LogIn"
@@ -101,8 +126,10 @@ String txt='';
     ,"finget":"fingerprint use"
     ,"profile":"profile"
     ,"timeimprint":"time imprint"
-    ,"workingstate":"working state"
+    ,"workingstate":"work"
     ,"Logout":"Logout"
+    ,"light":"Light"
+    ,"dark":"Dark"
     ,"language":"English"
     ,"log":"Signing in"
     ,"logerror":"Wrong user number or passcode"

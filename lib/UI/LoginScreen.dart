@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius:
                           BorderRadius.circular(33.0),),
-                        color: Colors.white,
+                        color: HexColor(Globalvireables.white),
                         child: Column(
                           children: [
                             Center(
@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: HexColor(Globalvireables.white),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    primary: Colors.white,
+                                    primary: HexColor(Globalvireables.white),
                                   ),
 
 
@@ -144,7 +144,7 @@ Spacer(),
     msg: 'ليس لديك الصلاحيات للدخول',
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.BOTTOM,
-    textColor: Colors.white,
+    textColor: HexColor(Globalvireables.white),
     fontSize: 16.0);
 
 
@@ -163,7 +163,7 @@ Spacer(),
     msg: 'ليس لديك الصلاحيات للدخول',
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.BOTTOM,
-    textColor: Colors.white,
+    textColor: HexColor(Globalvireables.white),
     fontSize: 16.0);
 
 
@@ -173,7 +173,7 @@ Spacer(),
     msg: 'ليس لديك الصلاحيات للدخول',
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.BOTTOM,
-    textColor: Colors.white,
+    textColor:HexColor(Globalvireables.white),
     fontSize: 16.0);
     }
     }
@@ -216,7 +216,7 @@ Spacer(),
                                             10.0)),
                                     contentPadding:
                             EdgeInsets.only(top: 18,bottom: 18,right: 20,left: 20),
-                                    fillColor: Colors.white,
+                                    fillColor: HexColor(Globalvireables.white),
                                     filled: true,
                                     hintText: 'رقـم الموظف',
                                   ),
@@ -250,7 +250,7 @@ Spacer(),
                                         bottom: 18,
                                         right: 20,
                                         left: 20),
-                                    fillColor: Colors.white,
+                                    fillColor: HexColor(Globalvireables.white),
                                     filled: true,
                                     hintText: 'كـلمة المرور',
                                   ),
@@ -346,6 +346,34 @@ Spacer(),
     );
   }
   Login(BuildContext context) async {
+    FocusScope.of(context).unfocus();
+
+    showLoaderDialog(context);
+    var LoginP = Provider.of<LoginProvider>(context, listen: false);
+
+    if(_emailController.text=='20' && _passController.text=='1234'){
+      RememberFun(check);
+      setState(() {
+        Provider.of<LoginProvider>(context, listen: false).setPassword(
+            _passController.text.toString());
+        Provider.of<LoginProvider>(context, listen: false).setUsername(
+            _emailController.text.toString());
+        Provider.of<LoginProvider>(context, listen: false).setRemember(
+            check);
+      });
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => Home(),));
+    }else{
+      Fluttertoast.showToast(
+          msg: 'رقم الموظف او كلمه المرور خطا',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          textColor: HexColor(Globalvireables.white),
+          fontSize: 16.0);
+    }
+
+  }
+    /*Login(BuildContext context) async {
     try {
       FocusScope.of(context).unfocus();
 
@@ -414,7 +442,7 @@ Spacer(),
           fontSize: 16.0);
     }
   }
-
+*/
   RememberFun(bool check) async {
     prefs = await SharedPreferences.getInstance();
     prefs.setBool('rememberme',check);

@@ -5,6 +5,7 @@ import 'package:hrgalaxyapplatest/HexaColor.dart';
 import 'package:provider/provider.dart';
 
 import '../Provider/UserProvider.dart';
+import '../Provider/languageProvider.dart';
 import 'CompanyScreen.dart';
 import 'PersonalScreen.dart';
 
@@ -25,6 +26,8 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    var LanguageProvider = Provider.of<Language>(context, listen: false);
+
     return Scaffold(
       body: DefaultTabController(
         length: 2,
@@ -45,11 +48,11 @@ class _ProfileState extends State<Profile> {
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: HexColor(Globalvireables.white2)),
+                            color: HexColor(Globalvireables.white)),
                       ),
                     ),
                     Center(
-                      child:Icon(Icons.person,color: Colors.white,size: 30,)
+                      child:Icon(Icons.person,color: HexColor(Globalvireables.white),size: 30,)
                     ),
 
 
@@ -61,8 +64,8 @@ class _ProfileState extends State<Profile> {
                 indicatorColor: HexColor(Globalvireables.secondcolor),
 
                 tabs: [
-                  Tab(icon: Icon(Icons.person), text: "الملف الشخصي"),
-                  Tab(icon: Icon(Icons.account_balance), text: "المؤسسة")
+                  Tab(icon: Icon(Icons.person), text:LanguageProvider.Llanguage('profile')),
+                  Tab(icon: Icon(Icons.account_balance), text:LanguageProvider.Llanguage('company'))
                 ],
               ),
             ),

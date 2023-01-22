@@ -23,7 +23,7 @@ String name='';
   Widget build(BuildContext context) {
     name= Provider.of<UserProvider>(context, listen: false).getname();
     return Scaffold(
-      backgroundColor: HexColor(Globalvireables.white2),
+      //backgroundColor: HexColor(Globalvireables.white2),
       //appBar: null,
       body: Container(
         child: SingleChildScrollView(
@@ -47,7 +47,7 @@ String name='';
                   focusElevation: 0,
                   highlightElevation: 0,
                   color: HexColor(Globalvireables.basecolor),
-                  textColor: Colors.white,
+                  textColor: HexColor(Globalvireables.white),
                   child: Icon(
                     Icons.person,
                     size: 65,
@@ -61,7 +61,7 @@ String name='';
                 Center(
                   child: Text(
                     name??'',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Center(
@@ -103,7 +103,7 @@ String name='';
                               child: Text(
                                 Provider.of<UserProvider>(context, listen: false).getdepdesc()??'',
                                 style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.bold),
+                                    fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                             ),
                             Spacer(),
@@ -114,7 +114,7 @@ String name='';
                               child: Text(
                                 ': الادارة ',
                                 style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.w400),
+                                    fontSize: 20, fontWeight: FontWeight.w200),
                               ),
                             ),
 
@@ -156,7 +156,7 @@ String name='';
                               child: Text(
                                 Provider.of<UserProvider>(context, listen: false).getsection()??'',
                                 style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.bold),
+                                    fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                             ),
                             Spacer(),
@@ -167,7 +167,7 @@ String name='';
                               child: Text(
                                 ': القسم ',
                                 style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.w400),
+                                    fontSize: 20, fontWeight: FontWeight.w200),
                               ),
                             ),
 
@@ -217,7 +217,7 @@ String name='';
                                       maxLines: 2,
                                       textDirection: TextDirection.rtl,
                                       style: TextStyle(
-                                          fontSize: 22, fontWeight: FontWeight.bold),
+                                          fontSize: 20, fontWeight: FontWeight.bold),
                                     ),
                                 ),
                             ),
@@ -238,7 +238,7 @@ String name='';
                                       maxLines: 3,
                                         ': المسؤول المباشر',
                                         style: TextStyle(
-                                            fontSize: 22, fontWeight: FontWeight.w400),
+                                            fontSize: 20, fontWeight: FontWeight.w200),
                                ),
                                   ),
                             ),
@@ -284,7 +284,7 @@ String name='';
                               child: Text(
                                 Provider.of<UserProvider>(context, listen: false).getworkstate()??'',
                                 style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.bold),
+                                    fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                             ),
                             Spacer(),
@@ -295,7 +295,7 @@ String name='';
                               child: Text(
                                 ': حالة الموظف ',
                                 style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.w400),
+                                    fontSize: 20, fontWeight: FontWeight.w200),
                               ),
                             ),
 
@@ -340,7 +340,7 @@ String name='';
                               child: Text(
                                 Provider.of<UserProvider>(context, listen: false).getyears()??'',
                                 style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.bold),
+                                    fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                             ),
                             Spacer(),
@@ -351,7 +351,7 @@ String name='';
                               child: Text(
                                 ': عدد سنوات الخدمة ',
                                 style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.w400),
+                                    fontSize: 20, fontWeight: FontWeight.w200),
                               ),
                             ),
 

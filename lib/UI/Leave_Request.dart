@@ -36,14 +36,13 @@ class _Leave_Request extends State<Leave_Request> {
 
     getdate();
     var LanguageProvider = Provider.of<Language>(context, listen: false);
-
     return Scaffold(
         appBar: AppBar(title: Text(
           LanguageProvider.Llanguage('leaverequest').toString(),
           /*   textDirection: TextDirection.ltr*/),
           backgroundColor: HexColor(Globalvireables.basecolor),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
+            icon: Icon(Icons.arrow_back, color: HexColor(Globalvireables.white)),
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Home()),),
@@ -202,7 +201,7 @@ class _Leave_Request extends State<Leave_Request> {
 
                                                 contentPadding: EdgeInsets.only(
                                                     top: 18, bottom: 18, right: 20, left: 20),
-                                                fillColor: Colors.white,
+                                                fillColor: HexColor(Globalvireables.white),
                                                 filled: true,
                                                 hintText: LanguageProvider.Llanguage('Departuretype').toString(),
 
@@ -242,7 +241,7 @@ class _Leave_Request extends State<Leave_Request> {
 
                                                 contentPadding: EdgeInsets.only(
                                                     top: 18, bottom: 18, right: 20, left: 20),
-                                                fillColor: Colors.white,
+                                                fillColor: HexColor(Globalvireables.white),
                                                 filled: true,
                                                 hintText: LanguageProvider.Llanguage('Departurestarttime').toString(),
 
@@ -300,7 +299,7 @@ class _Leave_Request extends State<Leave_Request> {
 
                                                 contentPadding: EdgeInsets.only(
                                                     top: 18, bottom: 18, right: 20, left: 20),
-                                                fillColor: Colors.white,
+                                                fillColor: HexColor(Globalvireables.white),
                                                 filled: true,
                                                 hintText: LanguageProvider.Llanguage('Departureendtime').toString(),
 
@@ -360,7 +359,7 @@ class _Leave_Request extends State<Leave_Request> {
 
                                                 contentPadding: EdgeInsets.only(
                                                     top: 18, bottom: 18, right: 20, left: 20),
-                                                fillColor: Colors.white,
+                                                fillColor: HexColor(Globalvireables.white),
                                                 filled: true,
                                                 hintText: LanguageProvider.Llanguage('Departuretime').toString(),
 
@@ -394,7 +393,7 @@ class _Leave_Request extends State<Leave_Request> {
 
                                                 contentPadding: EdgeInsets.only(
                                                     top: 70, bottom: 18, right: 20, left: 20),
-                                                fillColor: Colors.white,
+                                                fillColor: HexColor(Globalvireables.white),
                                                 filled: true,
 
                                                 hintText: LanguageProvider.Llanguage('notes').toString(),
@@ -430,9 +429,6 @@ class _Leave_Request extends State<Leave_Request> {
                                   ])
 
                           ))]))));
-
-
-
   }
   Color hexToColor(String code) {
 

@@ -225,7 +225,8 @@ try {
       borderRadius: BorderRadius.circular(100)
       //more than 50% of width makes circle
       ),
-        child: Icon(Icons.cached,color: Colors.white,),
+        child: Icon(Icons.cached,color:                                   HexColor(Globalvireables.white)
+          ,),
       ),
     )
     ],
@@ -338,7 +339,7 @@ try {
           ,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
-          textColor: Colors.white,
+          textColor: HexColor(Globalvireables.white),
           fontSize: 16.0);
     },
         child: Container(
@@ -588,14 +589,14 @@ CheckInCheckOut(String IO) async {
           msg: 'تم تسجيل الحركة بنجاح',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
-          textColor: Colors.white,
+          textColor: HexColor(Globalvireables.white),
           fontSize: 16.0);
     }else{
       Fluttertoast.showToast(
           msg: 'يوجد مشكله ، حاول مره اخرى',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
-          textColor: Colors.white,
+          textColor: HexColor(Globalvireables.white),
           fontSize: 16.0);
     }
   }else{
@@ -603,7 +604,7 @@ CheckInCheckOut(String IO) async {
         msg: 'تاكد من اتصال الانترنت',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        textColor: Colors.white,
+        textColor: HexColor(Globalvireables.white),
         fontSize: 16.0);
   }
   }

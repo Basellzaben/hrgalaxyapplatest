@@ -7,13 +7,23 @@ import 'package:flutter/material.dart';
 class Globalvireables {
 
   //Colors
-  static String basecolor="#0F64A2";
+  static String basecolor="#024A80";
   static String secondcolor="#D09A64";
   static String white2="#F5F5F5";
   static String white="#ffffff";
   static String black="#000000";
   static String black2="#191919";
+  static String basecolortow="#3E7AA7";
+  static String white3="#F1F1F1";
 
+
+
+ /* static String basecolor="#0F64A2";
+  static String secondcolor="#D09A64";
+  static String white2="#F5F5F5";
+  static String white="#ffffff";
+  static String black="#000000";
+  static String black2="#191919";*/
 
   //Api's
   static String loginapi="http://10.0.1.60:8020/api/User/CheckUser";
