@@ -6,6 +6,13 @@ import 'package:flutter/material.dart';
 
 class Globalvireables {
 
+  //thems color
+  static String themsc1="#024A80"; //inisial
+  static String themsc2="#1ab394"; //Purple
+  static String themsc3="#40E0D0";
+  static String themsc4="#239B56";
+  static String themsc5="#0B5345";
+
   //Colors
   static String basecolor="#024A80";
   static String secondcolor="#D09A64";
@@ -14,7 +21,7 @@ class Globalvireables {
   static String black="#000000";
   static String black2="#191919";
   static String basecolortow="#3E7AA7";
-  static String white3="#F1F1F1";
+  static String white3="#F4F4F6";
 
 
 
@@ -24,6 +31,7 @@ class Globalvireables {
   static String white="#ffffff";
   static String black="#000000";
   static String black2="#191919";*/
+
 
   //Api's
   static String loginapi="http://10.0.1.60:8020/api/User/CheckUser";

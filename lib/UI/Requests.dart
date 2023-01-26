@@ -9,6 +9,7 @@ import 'package:month_year_picker/month_year_picker.dart';
 import 'package:provider/provider.dart';
 import '../Models/WorkInfo.dart';
 import '../Provider/LoginProvider.dart';
+import '../Provider/ThemeProvider.dart';
 import '../Provider/languageProvider.dart';
 import 'dart:math' as math;
 
@@ -95,13 +96,17 @@ String month='1';
   }
   @override
   Widget build(BuildContext context) {
+    final themep = context.watch<ThemeProvider>();
+
     var lang = Provider.of<Language>(context, listen: false);
     var LanguageProvider = Provider.of<Language>(context, listen: false);
     return Scaffold(
+      backgroundColor: themep.themeMode.backgroundColor,
+
       appBar:AppBar(title: Text(
         LanguageProvider.Llanguage('workingstate').toString(),
         /*   textDirection: TextDirection.ltr*/),
-        backgroundColor: HexColor(Globalvireables.basecolor),
+        backgroundColor:  themep.themeMode.primaryColor,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: HexColor(Globalvireables.white)),
           onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Home()),),),
@@ -119,111 +124,119 @@ String month='1';
         crossAxisAlignment: CrossAxisAlignment.stretch,
 
         children: [
-            Card(
-              child: Container(
-                margin: EdgeInsets.all(10),
-                child: Align(
-                  child: Container(
-                      alignment: LanguageProvider.Align(),
-                      margin: const EdgeInsets.only(
-                          top: 18, left: 5, right: 5),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                child: Container(
+                  margin: EdgeInsets.all(10),
+                  child: Align(
+                    child: Container(
+                        alignment: LanguageProvider.Align(),
+                        margin: const EdgeInsets.only(
+                            top: 18, left: 5, right: 5),
 
-                      //  alignment: Alignment.center,
-                      child: Row(children: [
-                        Row(children: <Widget>[
+                        //  alignment: Alignment.center,
+                        child: Row(children: [
+                          Row(children: <Widget>[
     GestureDetector(
     onTap: () {
       _onPressed(context: context, locale: 'ar');
       },
-                            child: Icon(Icons.date_range,
-                                size: 25,),
-                          ),
-                           Text(
-                            '',
+                              child: Icon(Icons.date_range,
+                                  size: 25,),
+                            ),
+                             Text(
+                              '',
+                              textDirection:
+                              LanguageProvider.getDirection(),
+                              style: new TextStyle(
+                                fontSize: 15.0,
+                                //#e7e7df
+                              ),
+                            ),
+                          ]),
+SizedBox(width: 10,),
+                          Text(
+                            _selected.toString().substring(0,11),
                             textDirection:
                             LanguageProvider.getDirection(),
                             style: new TextStyle(
-                              fontSize: 15.0,
-                              //#e7e7df
+                              fontSize: 15.0, //#e7e7df
                             ),
                           ),
-                        ]),
-SizedBox(width: 10,),
-                        Text(
-                          _selected.toString().substring(0,11),
-                          textDirection:
-                          LanguageProvider.getDirection(),
-                          style: new TextStyle(
-                            fontSize: 15.0, //#e7e7df
+                          Spacer(),
+
+
+                          Text(
+                            'حاله الدوام خلال الشهر',
+                            textDirection:
+                            LanguageProvider.getDirection(),
+                            style: new TextStyle(
+                              fontSize: 15.0, //#e7e7df
+                            ),
                           ),
-                        ),
-                        Spacer(),
 
 
-                        Text(
-                          'حاله الدوام خلال الشهر',
-                          textDirection:
-                          LanguageProvider.getDirection(),
-                          style: new TextStyle(
-                            fontSize: 15.0, //#e7e7df
-                          ),
-                        ),
-
-
-                      ])),
+                        ])),
+                  ),
                 ),
               ),
             ),
-   Container(
-       height: MediaQuery.of(context).size.height/1.3,
-       width: MediaQuery.of(context).size.width/1.1,
-       child: ListView(
-                      children: WorkInfos!
-                          .map(
-                      (WorkInfo WorkInfo) => Container(
-                          padding: EdgeInsets.all(15),
-                          //color: HexColor(Globalvireables.white),
-                          width: MediaQuery.of(context).size.width/1.1,
-                          height: MediaQuery.of(context).size.height/WorkInfos.length,
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width:100,
-                                height: 100,
-                                child: MaterialButton(
-                                  onPressed: () {},
-                                  elevation: 1.0,
-                                  hoverElevation: 0,
-                                  focusElevation: 0,
-                                  highlightElevation: 0,
-                                  color: HexColor(Globalvireables.basecolor),
-                                  textColor: HexColor(Globalvireables.white),
-                                  child:Text(
-              WorkInfo.count.toString(),
-              textAlign: TextAlign.right,
-              style: TextStyle(fontWeight: FontWeight.bold, color: HexColor(Globalvireables.white),fontSize: 17),
-              ),
-                                  padding: EdgeInsets.all(16),
-                                  shape: CircleBorder(),
-                                ),
-                              ),
+   Padding(
+     padding: const EdgeInsets.all(8.0),
+     child: Card(
+       child: Container(
+           height: MediaQuery.of(context).size.height/1.3,
+           width: MediaQuery.of(context).size.width/1.1,
+           child: ListView(
+                          children: WorkInfos!
+                              .map(
+                          (WorkInfo WorkInfo) => Container(
+                              padding: EdgeInsets.all(15),
+                              //color: HexColor(Globalvireables.white),
+                              width: MediaQuery.of(context).size.width/1.1,
+                              height: MediaQuery.of(context).size.height/WorkInfos.length,
+                              child: Row(
+                                children: <Widget>[
+                                  Container(
+                                    width:100,
+                                    height: 100,
+                                    child: MaterialButton(
+                                      onPressed: () {},
+                                      elevation: 1.0,
+                                      hoverElevation: 0,
+                                      focusElevation: 0,
+                                      highlightElevation: 0,
+                                      color:  themep.themeMode.primaryColor,
+                                      textColor: HexColor(Globalvireables.white),
+                                      child:Text(
+                  WorkInfo.count.toString(),
+                  textAlign: TextAlign.right,
+                  style: TextStyle(fontWeight: FontWeight.bold, color: HexColor(Globalvireables.white),fontSize: 17),
+                  ),
+                                      padding: EdgeInsets.all(16),
+                                      shape: CircleBorder(),
+                                    ),
+                                  ),
 
 
-                              Expanded(
-                                child: Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      WorkInfo.description,
-                                      textDirection: TextDirection.ltr,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,),
-                                    )),)
-                            ],
+                                  Expanded(
+                                    child: Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Text(
+                                          WorkInfo.description,
+                                          textDirection: TextDirection.ltr,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,),
+                                        )),)
+                                ],
+                              )
+                          ),
                           )
-                      ),
-                      )
-                          .toList(),
-                      ),
+                              .toList(),
+                          ),
+       ),
+     ),
    ),
 
 

@@ -7,6 +7,7 @@ import 'package:hrgalaxyapplatest/UI/Home.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../Provider/ThemeProvider.dart';
 import '../Provider/UserProvider.dart';
 
 
@@ -33,14 +34,17 @@ class _Leave_Request extends State<Leave_Request> {
     goBackToPreviousScreen(BuildContext context) {
       Navigator.pop(context);
     }
+    final themep = context.watch<ThemeProvider>();
 
     getdate();
     var LanguageProvider = Provider.of<Language>(context, listen: false);
     return Scaffold(
+        backgroundColor: themep.themeMode.backgroundColor,
+
         appBar: AppBar(title: Text(
           LanguageProvider.Llanguage('leaverequest').toString(),
           /*   textDirection: TextDirection.ltr*/),
-          backgroundColor: HexColor(Globalvireables.basecolor),
+          backgroundColor:  themep.themeMode.primaryColor,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: HexColor(Globalvireables.white)),
             onPressed: () => Navigator.push(
@@ -416,7 +420,7 @@ class _Leave_Request extends State<Leave_Request> {
                                         child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                             padding: const EdgeInsets.all(8),
-                                            backgroundColor: HexColor(Globalvireables.basecolor),
+                                            backgroundColor:  themep.themeMode.primaryColor,
                                             shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(10.0),
                                             ),

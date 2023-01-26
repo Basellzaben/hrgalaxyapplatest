@@ -48,122 +48,130 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     var LoginP = Provider.of<LoginProvider>(context, listen: false);
+    final themep = context.watch<ThemeProvider>();
+
     init();
     var lang = Provider.of<Language>(context, listen: false);
     return Scaffold(
+      backgroundColor: themep.themeMode.backgroundColor,
+
       //appBar: null,
-      body: (SettingsList(
-        sections: [
-          SettingsSection(
-            title: Container(
-                margin: EdgeInsets.only(top: 10),
-                child: Align(
-                    alignment: _selectedLanguage == 'AR'
-                        ? Alignment.topRight
-                        : Alignment.topLeft,
-                    child: Text(
-                      lang.Llanguage('settings'),
-                      style: TextStyle(fontSize: 20),
-                    ))),
-            tiles: <SettingsTile>[
-              SettingsTile.navigation(
-                leading: const Icon(Icons.language),
-                title: Text(lang.Llanguage('language')),
-                trailing: DropdownButton(
-                  hint: Text(lang.Llanguage('language')),
-                  value:
-                      _selectedLanguage.isNotEmpty ? _selectedLanguage : 'EN',
-                  onChanged: (newValue) async {
-                    print(newValue.toString() + " selectedLanguagenewww");
-                    setLan(newValue ?? 'Ar');
-                    setState(() {
-                      _selectedLanguage = newValue.toString();
-                      Provider.of<Language>(context, listen: false)
-                          .setLanguage(_selectedLanguage);
-                      print(_selectedLanguage + "   _selectedLanguage");
-                    });
-                  },
-                  items: languages.map((lang) {
-                    return DropdownMenuItem(
-                      child: Text(lang),
-                      value: lang ?? '',
-                    );
-                  }).toList(),
-                ),
-              ),
+      body: Container(
+        color:    themep.themeMode.backgroundColor,
 
-              ////
+        child: (SettingsList(
 
-              SettingsTile.navigation(
-                  leading: const Icon(Icons.fingerprint),
-                  title: Text(lang.Llanguage('finget')),
-                  trailing: Switch(
-                    onChanged: toggleSwitch,
-                    value: isSwitched,
-                    activeColor: HexColor(Globalvireables.white),
-                    activeTrackColor: Colors.blueAccent,
-                    inactiveThumbColor: HexColor(Globalvireables.white),
-                    inactiveTrackColor: Colors.white12,
-                  )),
+          sections: [
+            SettingsSection(
+              title: Container(
 
-              SettingsTile.navigation(
-                  onPressed: (_) {
-                    setState(() {
-                      if (context.read<ThemeProvider>().getTheme ==
-                          context.read<ThemeProvider>().darkTheme) {
-                        context.read<ThemeProvider>().setTheme('light');
-                      } else {
-                        context.read<ThemeProvider>().setTheme('dark');
-                      }
-                    });
-                  },
-                  leading: context.read<ThemeProvider>().getThemeIcon,
-                  title: context.read<ThemeProvider>().getTheme ==
-                      context.read<ThemeProvider>().lightTheme
-                      ? Text(lang.Llanguage('light'))
-                      : Text(lang.Llanguage('dark'))
-
-
-              ),
-              
-              SettingsTile.navigation(
-                  leading: null,
-                  title: Text(lang.Llanguage('Logout')),
-                  trailing: GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (ctx) => AlertDialog(
-                            title: Text(lang.Llanguage('wanttologout')),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                      MaterialPageRoute(
-                                        builder: (context) => LoginScreen(),
-                                      ),
-                                      (Route<dynamic> route) => false);
-                                },
-                                child: Text('نعم'),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(ctx);
-                                },
-                                child: Text('لا'),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                      child: Icon(
-                        Icons.login_outlined,
-                        color: Colors.red,
+                  margin: EdgeInsets.only(top: 10),
+                  child: Align(
+                      alignment: _selectedLanguage == 'AR'
+                          ? Alignment.topRight
+                          : Alignment.topLeft,
+                      child: Text(
+                        lang.Llanguage('settings'),
+                        style: TextStyle(fontSize: 20),
                       ))),
-            ],
-          ),
-        ],
-      )),
+              tiles: <SettingsTile>[
+                SettingsTile.navigation(
+                  leading: const Icon(Icons.language),
+                  title: Text(lang.Llanguage('language')),
+                  trailing: DropdownButton(
+                    hint: Text(lang.Llanguage('language')),
+                    value:
+                        _selectedLanguage.isNotEmpty ? _selectedLanguage : 'EN',
+                    onChanged: (newValue) async {
+                      print(newValue.toString() + " selectedLanguagenewww");
+                      setLan(newValue ?? 'Ar');
+                      setState(() {
+                        _selectedLanguage = newValue.toString();
+                        Provider.of<Language>(context, listen: false)
+                            .setLanguage(_selectedLanguage);
+                        print(_selectedLanguage + "   _selectedLanguage");
+                      });
+                    },
+                    items: languages.map((lang) {
+                      return DropdownMenuItem(
+                        child: Text(lang),
+                        value: lang ?? '',
+                      );
+                    }).toList(),
+                  ),
+                ),
+
+                ////
+
+                SettingsTile.navigation(
+                    leading: const Icon(Icons.fingerprint),
+                    title: Text(lang.Llanguage('finget')),
+                    trailing: Switch(
+                      onChanged: toggleSwitch,
+                      value: isSwitched,
+                      activeColor: HexColor(Globalvireables.white),
+                      activeTrackColor: Colors.blueAccent,
+                      inactiveThumbColor: HexColor(Globalvireables.white),
+                      inactiveTrackColor: Colors.white12,
+                    )),
+
+                SettingsTile.navigation(
+                    onPressed: (_) {
+                      showLoaderDialog(context);
+                   /* setState(() {
+                        if (context.read<ThemeProvider>().getTheme ==
+                            context.read<ThemeProvider>().darkTheme) {
+                          context.read<ThemeProvider>().setTheme('light');
+                        } else {
+                          context.read<ThemeProvider>().setTheme('dark');
+                        }
+                      });*/
+                    },
+                    leading: context.read<ThemeProvider>().getThemeIcon,
+                    title: Text(lang.Llanguage('light'))
+
+
+                ),
+
+                SettingsTile.navigation(
+                    leading: null,
+                    title: Text(lang.Llanguage('Logout')),
+                    trailing: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              title: Text(lang.Llanguage('wanttologout')),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                          builder: (context) => LoginScreen(),
+                                        ),
+                                        (Route<dynamic> route) => false);
+                                  },
+                                  child: Text('نعم'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(ctx);
+                                  },
+                                  child: Text('لا'),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        child: Icon(
+                          Icons.login_outlined,
+                          color: Colors.red,
+                        ))),
+              ],
+            ),
+          ],
+        )),
+      ),
     );
   }
 
@@ -211,22 +219,163 @@ class _SettingsState extends State<Settings> {
 
   showLoaderDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
-      content: new Row(
-        children: [
-          Image.asset('assest/loading.gif',
-              height: 100, width: MediaQuery.of(context).size.width / 3),
-          Container(
-              margin: EdgeInsets.only(left: 7),
-              child: Text("...جار تسجيل الدخول")),
-        ],
+      content: Container(
+        height: 200,
+        child: Column(
+          children: [
+
+       Row(children: [
+
+         Container(
+           child: GestureDetector(
+               onTap: () {
+                 Navigator.pop(context);
+               }, child: Container(child: Icon(Icons.clear))),
+         ),
+Spacer(),
+         Container(
+           alignment: Alignment.topLeft,
+             child: Text('اختيار الالوان')
+         ),
+
+       ],),
+            Spacer(),
+            Spacer(),
+            Row(
+              children: [
+                Spacer(),
+                GestureDetector(
+                    onTap: () {
+                      context.read<ThemeProvider>().setTheme('them1');
+                      Navigator.pop(context);
+
+                    }, child: Container(
+                  width: 50,
+                  height: 50,
+                    decoration: BoxDecoration(
+                      color: HexColor(Globalvireables.themsc1),
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(100.0),
+                          bottomRight: Radius.circular(100.0),
+                          topLeft: Radius.circular(100.0),
+                          bottomLeft: Radius.circular(100.0)),
+                    ),
+                  )),
+                Spacer(),
+                GestureDetector(
+                    onTap: () {
+                      context.read<ThemeProvider>().setTheme('them2');
+                      Navigator.pop(context);
+
+                    }, child: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color:HexColor(Globalvireables.themsc2),
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(100.0),
+                        bottomRight: Radius.circular(100.0),
+                        topLeft: Radius.circular(100.0),
+                        bottomLeft: Radius.circular(100.0)),
+                  ),
+                )),
+                Spacer(),
+                GestureDetector(
+                    onTap: () {
+                      context.read<ThemeProvider>().setTheme('them5');
+                      Navigator.pop(context);
+
+                    }, child: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: HexColor(Globalvireables.themsc5),
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(100.0),
+                        bottomRight: Radius.circular(100.0),
+                        topLeft: Radius.circular(100.0),
+                        bottomLeft: Radius.circular(100.0)),
+                  ),
+                )),
+                Spacer(),
+              ],
+            ),
+            Spacer(),
+
+            Row(
+              children: [
+                Spacer(),
+                GestureDetector(
+                    onTap: () {
+                      context.read<ThemeProvider>().setTheme('them3');
+                      Navigator.pop(context);
+
+
+                    }, child:Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: HexColor(Globalvireables.themsc3),
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(100.0),
+                        bottomRight: Radius.circular(100.0),
+                        topLeft: Radius.circular(100.0),
+                        bottomLeft: Radius.circular(100.0)),
+                  ),
+                )),
+                Spacer(),
+                GestureDetector(
+                    onTap: () {
+                      context.read<ThemeProvider>().setTheme('them4');
+                      Navigator.pop(context);
+
+                    }, child: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: HexColor(Globalvireables.themsc4),
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(100.0),
+                        bottomRight: Radius.circular(100.0),
+                        topLeft: Radius.circular(100.0),
+                        bottomLeft: Radius.circular(100.0)),
+                  ),
+                )),
+                Spacer(),
+                GestureDetector(
+                    onTap: () {
+                      context.read<ThemeProvider>().setTheme('darkthem');
+                      Navigator.pop(context);
+
+                    }, child: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: HexColor(Globalvireables.black2),
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(100.0),
+                        bottomRight: Radius.circular(100.0),
+                        topLeft: Radius.circular(100.0),
+                        bottomLeft: Radius.circular(100.0)),
+                  ),
+                )),
+                Spacer()
+              ],
+            ),
+          ],
+        ),
       ),
     );
     showDialog(
-      barrierDismissible: false,
+      barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
         return alert;
       },
     );
   }
+
+
+
+
 }

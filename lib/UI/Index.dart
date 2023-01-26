@@ -12,10 +12,14 @@ import 'package:hrgalaxyapplatest/UI/VacationScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:timelines/timelines.dart';
 import '../Models/Personalinfo.dart';
+import '../Models/WorkInfo.dart';
 import '../Provider/LoginProvider.dart';
+import '../Provider/ThemeProvider.dart';
 import 'FngetPrint.dart';
 import 'LoginScreen.dart';
+import 'WorkInfo.dart';
 
 class Index extends StatefulWidget {
   @override
@@ -31,6 +35,8 @@ class _IndexState extends State<Index> {
   }
   var prefs;
   int selectedIndex = 0;
+  List<String> timelinestr=['تاريخ الميلاد','تاريخ التوظيف','تاريخ التثبيت','علاوه دوريه','مر 1 سنه منذ تاريخ التوظيف'];
+  List<String> timelindate=['26/07/1999','24/04/2021','23/07/2021','24/07/2021','24/04/2022'];
   Future<Personalinfo> getUserInfo() async {
      prefs = await SharedPreferences.getInstance();
 
@@ -66,50 +72,16 @@ if(jsonResponse.toString().contains('error'  ))
     var username = Personalinfo.fromJson(jsonResponse);
 
     return username;
-
-
   }
   @override
   Widget build(BuildContext context) {
     var LoginP = Provider.of<LoginProvider>(context, listen: false);
     var LanguageProvider = Provider.of<Language>(context, listen: false);
-
+    final themep = context.watch<ThemeProvider>();
     return Scaffold(
-     /* appBar: AppBar(title: Text(
-        LanguageProvider.Llanguage('Home').toString(),
-        *//*   textDirection: TextDirection.ltr*//*),
-        backgroundColor: HexColor(Globalvireables.basecolor),
-        leading: IconButton(
-          icon: Icon(Icons.logout_sharp, color: Colors.white),
-          onPressed: () =>
-              showDialog(
-                context: context,
-                builder: (ctx) => AlertDialog(
-                  title: Text(LanguageProvider.Llanguage('wanttologout')),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                          builder: (context) => LoginScreen(),
-                        ), (Route<dynamic> route) => false);
+      backgroundColor: themep.themeMode.backgroundColor,
 
-                      },
-                      child: Text('نعم'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(ctx);
-                      },
-                      child: Text('لا'),
-                    ),
-                  ],
-                ),
-              )
-
-        ),
-        // goBackToPreviousScreen();
-      ),*/
-       // backgroundColor:HexColor(Globalvireables.white2),
+      //  backgroundColor:HexColor(Globalvireables.white3),
         body: SafeArea(
           child: Container(
            // color: HexColor(Globalvireables.white2),
@@ -139,77 +111,131 @@ try {
 }catch(_){
 }
 
-             return Container(
-            //  color: HexColor(Globalvireables.white2),
-              /* decoration: BoxDecoration(
-                 image: DecorationImage(
-                   image: AssetImage("assest/back5.png"),
-                   fit: BoxFit.cover,
-                 ),
-               ),*/
+      return Container(
                   child: SafeArea(
                     child: Column(
                       children: [
-                        Card(
-                          child: Container(
+                    Container(
                             alignment: Alignment.topRight,
                             width: MediaQuery.of(context).size.width/1.1,
+                              child: Card(
+                                child: Container(
+                                  padding: EdgeInsets.all(5),
+                                  color: Colors.transparent,
+                                  alignment: Alignment.topRight,
+                                    child: Row(children: [
+                                      //  Icon(Icons.person,color: Colors.white,size: 70,),
 
-
-                              child: Container(
-                                padding: EdgeInsets.all(5),
-                                color: Colors.transparent,
-                                alignment: Alignment.topRight,
-                                  child: Row(children: [
-                                    //  Icon(Icons.person,color: Colors.white,size: 70,),
-
-                                    IconButton(
-                                        icon: Icon(Icons.notifications, color: Colors.redAccent),
-                                        onPressed: () =>
-                                        {
-                                        Fluttertoast.showToast(
-                                        msg: 'لا يوجد اشعارات حاليا',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        textColor:HexColor(Globalvireables.white),
-                                        fontSize: 16.0)
-                                        }),
+                                      IconButton(
+                                          icon: Icon(Icons.notifications, color: Colors.redAccent),
+                                          onPressed: () =>
+                                          {Fluttertoast.showToast(
+                                          msg: 'لا يوجد اشعارات حاليا',
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          textColor:HexColor(Globalvireables.white),
+                                          fontSize: 16.0)
+                                          }),
 
 
 Spacer(),
 
-                                    Text(Provider.of<UserProvider>(context, listen: false).getname()??'',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
-
-                                    MaterialButton(
-                                      onPressed: () {},
-                                      elevation: 0.0,
-                                      hoverElevation: 0,
-                                      focusElevation: 0,
-                                      highlightElevation: 0,
-                                      color: HexColor(Globalvireables.basecolor),
-                                      textColor: HexColor(Globalvireables.white),
-                                      child: Icon(
-                                        Icons.person,
-                                        size: 20,
+                                      Column(
+                                        children: [
+                                          Text(Provider.of<UserProvider>(context, listen: false).getname()??'',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                                        ],
                                       ),
-                                      padding: EdgeInsets.all(16),
-                                      shape: CircleBorder(),
+
+                                      MaterialButton(
+                                        onPressed: () {},
+                                        elevation: 0.0,
+                                        hoverElevation: 0,
+                                        focusElevation: 0,
+                                        highlightElevation: 0,
+                                        color: themep.themeMode.primaryColor,
+                                        textColor: themep.themeMode.primaryColor,
+                                        child: Icon(
+                                          Icons.person,
+                                          size: 20,
+                                          color: themep.themeMode.backgroundColor,
+                                        ),
+                                        padding: EdgeInsets.all(16),
+                                        shape: CircleBorder(),
+                                      ),
+                                    ],),
                                     ),
-                                  ],),
+                              ),
                                   ),
-                                  ),
-                        ),
 
                           Container(
                             margin: EdgeInsets.only(left: 12,right: 12,bottom: 14),
-                            color: HexColor(Globalvireables.white2),
-                            child: Card(
+
+                          //  color: HexColor(Globalvireables.white2),
                               child: Column(
                               children: [
-                              Container(
+
+                   /*           Container(
+                                padding: EdgeInsets.all(5),
+
+                                margin: EdgeInsets.only(left: 20,right: 20,top: 10),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black26),
+                              color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(3.0),
+                      bottomRight: Radius.circular(3.0),
+                      topLeft: Radius.circular(3.0),
+                      bottomLeft: Radius.circular(3.0))),
+                                  child: Column(
+                                    children: [
+                                      
+                                      Container(
+                                        margin: EdgeInsets.only(top: 10,left: 10,right: 10,bottom: 22),
+                                        child: Row(children: [
+                                          Text('2023/1/23',style: TextStyle(fontWeight: FontWeight.w200,fontSize: 16),),
+                                          Spacer(),
+                                          Spacer(),
+                                          Text('الاربعا',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+
+
+
+                                        ],),
+                                      ),
+
+                                      Container(
+                                          margin: EdgeInsets.only(top: 5,left: 10,right: 10),
+                                          alignment: Alignment.topRight,
+                                          child: Text(' تسجيل حضور / انصراف')),
+
+
+                                      Row(children: [
+                                        Spacer(),
+                                     Icon(
+                                          Icons.fingerprint,
+                                          size: 50,
+                                       color: Colors.green,
+                                        ),
+                                        Spacer(),
+                                        Container(
+                                          margin: EdgeInsets.only(top: 5,left: 10,right: 10),
+                                          alignment: Alignment.topRight,
+                                          child: Text('تم تسجيل الدخول الي،م في الشساعه 8:00'),
+                                        )
+
+
+
+                                      ],),
+
+                                    ],
+                                  ),
+
+      ),
+
+*/
+
+                            Container(
                                 decoration: BoxDecoration(
-                                  color:prefs==null ?HexColor(Globalvireables.basecolor):prefs.getBool('isDark') ?
-                                  Colors.white12:HexColor(Globalvireables.basecolor),
+                                  color:  themep.themeMode.primaryColor,
                                   borderRadius: BorderRadius.only(
                                       topRight: Radius.circular(0.0),
                                       bottomRight: Radius.circular(40.0),
@@ -222,13 +248,12 @@ Spacer(),
 child: Row(children: [
   GestureDetector(
     onTap: () {
-
       Navigator.of(context).push(
             MaterialPageRoute(
                 builder: (context) =>
                     VacationScreen()));
-
     },
+
   child:   Padding(
     padding: const EdgeInsets.all(8.0),
     child:   Column(children: [
@@ -354,12 +379,11 @@ Spacer(),
 
 
 ],),),
-
-
                                 Container(
                                   margin: EdgeInsets.all(20),
                                     alignment: Alignment.topRight,
-                                    child: Text(LanguageProvider.Llanguage('vacations'), style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)),
+                                    child: Text(LanguageProvider.Llanguage('vacations'), style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)
+                                ),
 
 
 Card(
@@ -368,14 +392,14 @@ Card(
     Column(children: [
       Text(LanguageProvider.Llanguage('sickleave'), style: TextStyle(fontSize: 20,fontWeight: FontWeight.w200),)
   ,
-      Text('3', style: TextStyle(fontSize: 70,fontWeight: FontWeight.bold, color: HexColor(Globalvireables.basecolor)),)
+      Text('3', style: TextStyle(fontSize: 70,fontWeight: FontWeight.bold, color:  themep.themeMode.primaryColor),)
   
     ],)
     , Spacer(),
      Spacer(),
     Column(children: [
       Text(LanguageProvider.Llanguage('sickleave'), style: TextStyle(fontSize: 20,fontWeight: FontWeight.w200),),
-      Text('6', style: TextStyle(fontSize: 70,fontWeight: FontWeight.bold, color: HexColor(Globalvireables.basecolor)),)
+      Text('6', style: TextStyle(fontSize: 70,fontWeight: FontWeight.bold, color:  themep.themeMode.primaryColor),)
   
     ],),
     Spacer(),
@@ -652,8 +676,42 @@ Card(
 
 
                         ]),
+                          ),
+
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            height: 50,
+                            width: MediaQuery.of(context).size.width/1.1,
+                            margin: EdgeInsets.only(
+                                top: 22, bottom: 0),
+                            color: HexColor(Globalvireables.white),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: HexColor(Globalvireables.white),
+                                ),
+                                child: Row(children: [
+                                  Spacer(),
+                                  Text(
+                                    "الحضور و الانصراف",
+                                    style: TextStyle(
+                                        color: HexColor(
+                                            Globalvireables.black),
+                                        fontSize: 15),
+                                  ),
+                                  Spacer(),
+                                  Icon(Icons.work,color: themep.themeMode.primaryColor,)
+                                ],),
+                                onPressed: () async {
+                                  Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              WorkInfoScreen()));
+                                }
+
                             ),
                           ),
+                        ),
 
 
                         Align(
@@ -693,6 +751,8 @@ Card(
                           ),
                         ),
 
+
+
                         Container(
                           margin: EdgeInsets.only(left:20,right: 20,bottom: 20),
                             alignment: Alignment.topRight,
@@ -703,20 +763,44 @@ Card(
                             Spacer(),
                             Column(children: [
                               Text(LanguageProvider.Llanguage('leaverequest'),style: TextStyle(fontSize: 18,),),
-                              Text('3',style: TextStyle(fontSize: 40,fontWeight: FontWeight.bold,color: HexColor(Globalvireables.basecolor)),),
+                              Text('3',style: TextStyle(fontSize: 40,fontWeight: FontWeight.bold,color:  themep.themeMode.primaryColor),),
                             ],),
                             Spacer(),
 
                             Column(children: [
                               Text(LanguageProvider.Llanguage('vacationrequest'),style: TextStyle(fontSize: 18,),),
-                              Text('2',style: TextStyle(fontSize: 40,fontWeight: FontWeight.bold,color: HexColor(Globalvireables.basecolor)),),
+                              Text('2',style: TextStyle(fontSize: 40,fontWeight: FontWeight.bold,color:  themep.themeMode.primaryColor),),
                             ],),
                             Spacer(),
 
                           ],
+                        ),
+
+
+                        Container(
+                            margin: EdgeInsets.only(left:20,right: 20,bottom: 20,top: 10),
+                            alignment: Alignment.topRight,
+                            child: Text(LanguageProvider.Llanguage('timeline'),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
+
+
+                        FixedTimeline.tileBuilder(
+                          builder: TimelineTileBuilder.connectedFromStyle(
+                            contentsAlign: ContentsAlign.alternating,
+                            oppositeContentsBuilder: (context, index) => Padding(
+                              padding: const EdgeInsets.all(9.0),
+                              child: Text(timelinestr[index],style: TextStyle(fontWeight: FontWeight.bold),),
+                            ),
+                            contentsBuilder: (context, index) => /*Card(
+                              child:*/ Padding(
+                                padding: const EdgeInsets.all(9.0),
+                                child: Text(timelindate[index],style: TextStyle(fontSize: 16),),
+                              ),
+                            //),
+                            connectorStyleBuilder: (context, index) => ConnectorStyle.dashedLine,
+                            indicatorStyleBuilder: (context, index) => IndicatorStyle.outlined,
+                            itemCount: 5,
+                          ),
                         )
-
-
 
                       ],
 
@@ -727,7 +811,7 @@ Card(
 
     ),
                   ),
-                );
+                )   ;
 
 
 

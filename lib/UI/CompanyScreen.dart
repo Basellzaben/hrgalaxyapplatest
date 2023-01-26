@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hrgalaxyapplatest/GlobalVar.dart';
 import 'package:hrgalaxyapplatest/HexaColor.dart';
+import 'package:provider/provider.dart';
+
+import '../Provider/ThemeProvider.dart';
 
 class CompanyScreen extends StatefulWidget {
   @override
@@ -18,8 +21,11 @@ class _CompanyScreenState extends State<CompanyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //double defaultSize = SizeConfig.defaultSize;
+    final themep = context.watch<ThemeProvider>();
     return Scaffold(
-     // backgroundColor: HexColor(Globalvireables.white2),
+
+     backgroundColor: themep.themeMode.backgroundColor,
       body: Center(
         child: Column(children: [
           Center(

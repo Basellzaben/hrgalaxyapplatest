@@ -9,6 +9,7 @@ import 'dart:io' as io;
 import 'dart:io' as io;
 import '../GlobalVar.dart';
 import '../HexaColor.dart';
+import '../Provider/ThemeProvider.dart';
 import '../Provider/UserProvider.dart';
 import '../Provider/languageProvider.dart';
 import 'Home.dart';
@@ -72,17 +73,20 @@ class _VacationScreen extends State<VacationScreen> {
     goBackToPreviousScreen(BuildContext context) {
       Navigator.pop(context);
     }
+    final themep = context.watch<ThemeProvider>();
 
     getdate();
     var LanguageProvider = Provider.of<Language>(context, listen: false);
 
     return Scaffold(
+        backgroundColor: themep.themeMode.backgroundColor,
+
         appBar: AppBar(
           title: Text(
             LanguageProvider.Llanguage('vacationrequest')
                 .toString(), /*   textDirection: TextDirection.ltr*/
           ),
-          backgroundColor: HexColor(Globalvireables.basecolor),
+          backgroundColor:  themep.themeMode.primaryColor,
 
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: HexColor(Globalvireables.white)),
@@ -496,7 +500,7 @@ class _VacationScreen extends State<VacationScreen> {
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor:
-                                            HexColor(Globalvireables.basecolor),
+                                             themep.themeMode.primaryColor,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(0.0),
@@ -552,7 +556,7 @@ class _VacationScreen extends State<VacationScreen> {
                                     right: 50.0,
                                     top: 50.0,
                                     bottom: 20.0),
-                                color: HexColor(Globalvireables.basecolor),
+                                color:  themep.themeMode.primaryColor,
                                 //      color: Colors.deepPurple,
                                 width: 300,
                                 height: 50,
@@ -560,7 +564,7 @@ class _VacationScreen extends State<VacationScreen> {
                                   style: ElevatedButton.styleFrom(
                                     padding: const EdgeInsets.all(8),
                                     backgroundColor:
-                                        HexColor(Globalvireables.basecolor),
+                                         themep.themeMode.primaryColor,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10.0),
                                     ),

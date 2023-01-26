@@ -42,6 +42,8 @@ String txt='';
   static Map<String , Object?>  ar={
     "language":"اللغه العربيه",
     "previoustime":"وقت الانصراف السابق",
+    "timeline":"الخط الزمني",
+    "WorkInfoScreen":"الحضور و الانصراف",
   "sickleave":"مرضيه"
     ,"company":"المؤسسة"
     ,"Attendancetoday":"وقت الحضور اليوم"
@@ -111,12 +113,14 @@ String txt='';
     ,"password":"password"
     ,"fingett":"finger print",
   "sickleave":"sickleave",
-  "previoustime":"previous dismissal time",
+    "WorkInfoScreen":"Attend and leave",
+
+    "previoustime":"previous dismissal time",
   "myrequest":"My Request"
     ,"vacations":"vacations"
-    ,"company":"Enterprise"
-
-    ,"Attendancetoday":"Attendance time today"
+    ,"company":"Enterprise",
+  "timeline":"time line",
+    "Attendancetoday":"Attendance time today"
     ,"annual":"annual"
     ,"Home":"Home"
     ,"wanttologout":"Are you sure you want to logout?؟"
@@ -168,7 +172,6 @@ String txt='';
     ,"requesttype":"request type"
     ,"request":"request"
     ,"documents":"documents"
-
   };
 
 

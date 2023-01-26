@@ -4,6 +4,7 @@ import 'package:hrgalaxyapplatest/GlobalVar.dart';
 import 'package:hrgalaxyapplatest/HexaColor.dart';
 import 'package:provider/provider.dart';
 
+import '../Provider/ThemeProvider.dart';
 import '../Provider/UserProvider.dart';
 import '../Provider/languageProvider.dart';
 import 'CompanyScreen.dart';
@@ -27,8 +28,11 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     var LanguageProvider = Provider.of<Language>(context, listen: false);
+    final themep = context.watch<ThemeProvider>();
 
     return Scaffold(
+      backgroundColor: themep.themeMode.backgroundColor,
+
       body: DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -37,7 +41,7 @@ class _ProfileState extends State<Profile> {
                 Size.fromHeight(MediaQuery.of(context).size.width / 3),
             child: AppBar(
               automaticallyImplyLeading: false,
-              backgroundColor: HexColor(Globalvireables.basecolor),
+              backgroundColor:  themep.themeMode.primaryColor,
               title: Container(
                 child: Row(
                   children: [

@@ -17,6 +17,7 @@ import 'package:geolocator/geolocator.dart';
 import '../Models/LocationM.dart';
 import '../Models/Time.dart';
 import '../Provider/LoginProvider.dart';
+import '../Provider/ThemeProvider.dart';
 import 'Index.dart';
 import 'Profile.dart';
 import 'Requests.dart';
@@ -137,6 +138,8 @@ try {
   bool fingeraccess=false;
   @override
   Widget build(BuildContext context) {
+    final themep = context.watch<ThemeProvider>();
+
     DateTime now = DateTime.now();
     String formattedDate2 = DateFormat('EEE d MMM').format(now);
 
@@ -150,6 +153,7 @@ try {
         ,  _currentPosition?.latitude??0.0,_currentPosition?.longitude??0.0);
 
     return Scaffold(
+        backgroundColor: themep.themeMode.backgroundColor,
 
         body: /*StreamBuilder(
     stream: Stream.periodic(Duration(seconds: 1)).asyncMap((i) => getTime()),
@@ -288,8 +292,8 @@ try {
         .displayMedium,
     fontSize: 50,
     fontWeight: FontWeight.w800,
-    color: HexColor(
-    Globalvireables.basecolor)),
+    color:
+    themep.themeMode.backgroundColor),
     ),
     ),
     ),
@@ -433,7 +437,7 @@ try {
     height: 30,
     width: 30,
     decoration: BoxDecoration(
-    color: HexColor(Globalvireables.basecolor),
+    color:  themep.themeMode.primaryColor,
     borderRadius: BorderRadius.circular(100)
     //more than 50% of width makes circle
     ),

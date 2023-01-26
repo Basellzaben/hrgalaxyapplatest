@@ -18,6 +18,7 @@ String username = 'nn';
 String password = 'nn';
 
 Future<void> main() async {
+  //final prefs = await SharedPreferences.getInstance();
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(MultiProvider(
@@ -28,8 +29,8 @@ Future<void> main() async {
       ChangeNotifierProvider<LocationProvider>(create: (_) => LocationProvider()),
       ChangeNotifierProvider<ThemeProvider>(
               create: (_) => ThemeProvider(
-                   false
-            )
+                  false
+                )
           ),
 
     ],
@@ -50,9 +51,7 @@ class MyApp extends StatelessWidget {
     pref.setString('language', language);
     Provider.of<Language>(context, listen: false)
         .setLanguage(language);
-    print(language +" laaan");
-
-  }
+    print(language +" laaan");}
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -68,7 +67,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: themep.getTheme,
-      darkTheme: themep.darkTheme,
+      darkTheme: themep.darkthem,
 
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -112,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return EasySplashScreen(
       backgroundColor: HexColor(Globalvireables.white2),
       logoWidth: MediaQuery.of(context).size.width/3.5,
-      loaderColor: HexColor(Globalvireables.basecolor),
+      loaderColor: Colors.black,
       logo: Image.asset(
         "assest/galaxylogo.png",
       ),

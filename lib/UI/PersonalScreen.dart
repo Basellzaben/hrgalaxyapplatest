@@ -4,6 +4,7 @@ import 'package:hrgalaxyapplatest/GlobalVar.dart';
 import 'package:hrgalaxyapplatest/HexaColor.dart';
 import 'package:provider/provider.dart';
 
+import '../Provider/ThemeProvider.dart';
 import '../Provider/UserProvider.dart';
 
 class PersonalScreen extends StatefulWidget {
@@ -21,8 +22,12 @@ String name='';
 
   @override
   Widget build(BuildContext context) {
+    final themep = context.watch<ThemeProvider>();
+
     name= Provider.of<UserProvider>(context, listen: false).getname();
     return Scaffold(
+      backgroundColor: themep.themeMode.backgroundColor,
+
       //backgroundColor: HexColor(Globalvireables.white2),
       //appBar: null,
       body: Container(
@@ -46,7 +51,7 @@ String name='';
                   hoverElevation: 0,
                   focusElevation: 0,
                   highlightElevation: 0,
-                  color: HexColor(Globalvireables.basecolor),
+                  color:  themep.themeMode.primaryColor,
                   textColor: HexColor(Globalvireables.white),
                   child: Icon(
                     Icons.person,

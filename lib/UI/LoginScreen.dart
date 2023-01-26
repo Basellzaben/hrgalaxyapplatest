@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../AuthenticationService/LocalAuthApi.dart';
 import '../GlobalVar.dart';
 import '../HexaColor.dart';
+import '../Provider/ThemeProvider.dart';
 import 'FngetPrint.dart';
 import 'Home.dart';
 import 'package:http/http.dart' as http;
@@ -33,9 +34,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final auth = LocalAuthentication();
   @override
   void initState() {
-    // TODO: implement initState
     inisial();
-
+    context.read<ThemeProvider>().setTheme('them1');
     super.initState();
   }
   bool authorized = false;
@@ -50,7 +50,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     var LoginP = Provider.of<LoginProvider>(context, listen: false);
     print(check.toString() +"  ccccheck");
+    final themep = context.watch<ThemeProvider>();
+    // context.read<ThemeProvider>().setTheme('them1');
+
     return Scaffold(
+     // backgroundColor: themep.themeMode.backgroundColor,
+
       backgroundColor: Colors.transparent,
       //appBar: null,
       body: Container(
@@ -199,11 +204,11 @@ Spacer(),
                                 child: TextField(
                                   controller: _emailController,
                                   decoration: InputDecoration(
-                                    prefixIcon: Icon(Icons.email,color: HexColor(Globalvireables.basecolor),),
+                                    prefixIcon: Icon(Icons.email,color:  themep.themeMode.primaryColor,),
                                     border: OutlineInputBorder(),
                                     focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: HexColor(Globalvireables.basecolor),
+                                            color:  themep.themeMode.primaryColor,
                                             width: 0.0),
                                         borderRadius:
                                         BorderRadius.circular(10.0)),
@@ -227,7 +232,7 @@ Spacer(),
                                 child: TextField(
                                   controller: _passController,
                                   decoration: InputDecoration(
-                                    prefixIcon: Icon(Icons.password_sharp,color: HexColor(Globalvireables.basecolor)),
+                                    prefixIcon: Icon(Icons.password_sharp,color:  themep.themeMode.primaryColor),
                                     border: OutlineInputBorder(),
                                     focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -325,7 +330,7 @@ Spacer(),
                           shape: RoundedRectangleBorder(
                             borderRadius:
                             BorderRadius.circular(10.0),),
-                          color: HexColor(Globalvireables.basecolor),
+                          color:  themep.themeMode.primaryColor,
                           child: Column(
                               children: [
 
