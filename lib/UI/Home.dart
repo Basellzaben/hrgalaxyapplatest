@@ -4,6 +4,7 @@ import 'package:hrgalaxyapplatest/GlobalVar.dart';
 import 'package:hrgalaxyapplatest/HexaColor.dart';
 import 'package:hrgalaxyapplatest/UI/Settings.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import '../Provider/ThemeProvider.dart';
 import '../Provider/languageProvider.dart';
@@ -42,8 +43,13 @@ class _HomeState extends State<Home> {
         backgroundColor: themep.themeMode.backgroundColor,
 
         //appBar: null,
-        body: Center(
-          child: nav.elementAt(selectedIndex),
+        body: ResponsiveBuilder(
+          builder: (context,sizeInfo){
+            return Center(
+              child: nav.elementAt(selectedIndex),
+            );
+          }
+
         ),
 
       bottomNavigationBar: BottomNavigationBar(

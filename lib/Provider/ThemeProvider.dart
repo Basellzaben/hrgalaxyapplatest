@@ -98,12 +98,12 @@ class ThemeProvider with ChangeNotifier {
 
 
   final darkthem = ThemeData(
-    primaryColor: Colors.black45,
-    brightness: Brightness.dark,
-    backgroundColor: const Color(0xFFE5E5E5),
-    dividerColor: Colors.black,
+    primaryColor: Colors.deepOrange,
+    brightness: Brightness.light,
+    backgroundColor: HexColor(Globalvireables.white3),
+    dividerColor: Colors.white,
     colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.deepOrange)
-        .copyWith(secondary: Colors.indigo, brightness: Brightness.dark),
+        .copyWith(secondary: Colors.indigo, brightness: Brightness.light),
   );
 
 
@@ -155,7 +155,7 @@ else if(themeMode==them4)
     else if(themeMode==them5)
       return Icon(Icons.light_mode,color: HexColor(Globalvireables.themsc5),);
 else
-      return Icon(Icons.dark_mode);
+      return Icon(Icons.light_mode,color: Colors.deepOrange,);
   }
 
 

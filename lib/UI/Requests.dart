@@ -168,7 +168,7 @@ SizedBox(width: 10,),
 
 
                           Text(
-                            'حاله الدوام خلال الشهر',
+                            LanguageProvider.Llanguage('workinmonth'),
                             textDirection:
                             LanguageProvider.getDirection(),
                             style: new TextStyle(

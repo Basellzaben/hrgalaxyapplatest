@@ -6,7 +6,6 @@ import '../main.dart';
 
 class Language extends ChangeNotifier {
   String langg = language;
-
   getLanguage() {
     return langg;
   }
@@ -41,15 +40,28 @@ String txt='';
 
   static Map<String , Object?>  ar={
     "language":"اللغه العربيه",
+    "loading":"يجب الانتظار لحين جلب الوقت...",
     "previoustime":"وقت الانصراف السابق",
+    "aboutcompany":"وقت الانصراف السابق",
+    "notask":"لا يتوفر لديك مهام الان",
+    "MyRequest":"طلباتي",
+    "checkin":"تسجيل الدخول",
+    "checkout":"تسجيل الخروج",
+
+    "late":"متاخر",
+    "Absence":"الغياب بدون عذر",
+    "fullwork":"دوام كامل",
+
+
     "timeline":"الخط الزمني",
     "WorkInfoScreen":"الحضور و الانصراف",
   "sickleave":"مرضيه"
     ,"company":"المؤسسة"
     ,"Attendancetoday":"وقت الحضور اليوم"
     ,"settings":"الاعدادات"
-    ,"Home":"الرئيسية"
-    ,"annual":"سنوية"
+    ,"Home":"الرئيسية",
+  "aboutcompany":"مجموعة غالاكسي الدولية (GI - Group) هي شركة لتكنولوجيا المعلومات تأسست عام 1992 بفروع مختلفة",
+  "annual":"سنوية"
     ,"vacations":"رصيد الاجازات"
     ,"basel":"باسل خلف الزبن"
     ,"wanttologout":"هل تريد تسجيل الخروج ؟"
@@ -59,8 +71,13 @@ String txt='';
     ,"login":"تسجيل الدخول"
     ,"profile":"الملف الشخصي"
     ,"defaultend":"'وقت نهايه الدوام المفترض'"
-
-    ,"light":"فاتح"
+    ,"departures":" : المغادرات"
+    ,"vacations":" الاجازات",
+  "acceptable":"مقبولة"
+    ,"rejected":"مرفوضة",
+  "pending":"قيد الانتظار",
+  "workinmonth":"حاله الدوام خلال الشهر",
+  "light":"فاتح"
     ,"dark":"الوضع الليلي"
     ,"timeimprint":"بصمة الدوام"
     ,"workingstate":"الدوام"
@@ -72,6 +89,7 @@ String txt='';
     ,"leaverequest":"طلب مغادرة"
     ,"vacationrequest":"طلب اجازة"
     ,"Name":"الاسـم : "
+    ,"Leaving":"مغادره"
     ,"Departuretype":"نوع المغادرة"
     ,"Departurestarttime":"وقت بداية المغادرة"
     ,"Departureendtime":"وقت نهاية المغادرة"
@@ -102,22 +120,59 @@ String txt='';
     ,"requesttype":"نوع الطلب"
     ,"request":"الطلب"
     ,"request":"طلب اجازه"
-    ,"fingett":"البصمة"
-    ,"myrequest":"طلباتي"
-
+    ,"fingett":"البصمة",
+  "selectcolor":"اختيار الالوان",
+  "metr":"متر"
+    ,"nonotification":"لا يوجد اشعارات حاليا"
+  ,"distancerange":"يجب ان تكون ضمن نطاق المسافه المسموح بها"
+  ,"distancerangeit":"يجب ان تكون ضمن نطاق المسافه المسموح بها وهي",
+    "myrequest":"طلباتي",
+    "checkat":"تم تسجيل الدخول اليوم في الساعة 8",
+    "onmonth":"خلال الشهر",
+    "absence":"الاجازات",
+    "sendrequest":"تقديم طلب",
+    "task":"المهام",
+    "checkinout":"تسجيل الحضور / المغادرة"
   };
-
   static Map<String , Object?>  en={
     "username":"username "
-    ,"defaultend":"default end time"
-    ,"password":"password"
-    ,"fingett":"finger print",
-  "sickleave":"sickleave",
-    "WorkInfoScreen":"Attend and leave",
+  ,"metr":"mtr",
+    "checkin":"check in",
+    "Absence":"Absence without excuse",
+    "fullwork":"Full-time",
+    "late":"Late",
+  "departures":"departures :",
+  "vacations":"vacations :",
+    "checkout":"check out",
+    "notask":"You don't have any assignments right now",
+    "Leaving":"Leaving",
+    "task":"Task",
+  "sendrequest":"Submit a application",
+    "absence":"absence",
+    "onmonth":"in month",
 
+    "selectcolor":"Select color",
+
+    "acceptable":"acceptable",
+    "rejected":"rejected",
+  "rejected":"rejected",
+  "pending":"pending",
+"workinmonth":"Working hours during the month",
+    "checkinout":"Attendance / departure registration"
+  ,"nonotification":"There are currently no notifications",
+  "checkat":"Checked in at 8:00 PM"
+    ,"defaultend":"default end time"
+  ,"password":"password",
+"distancerangeit":"It must be within the permitted distance range",
+"distancerange":"It must be within the allowed distance range",
+  "loading":"You have to wait until the time comes..."
+  ,"fingett":"finger print",
+  "sickleave":"sick leave",
+    "aboutcompany":"Galaxy International Group (GI - Group) is an Information Technology Company established in 1992 with different branches",
+    "WorkInfoScreen":"Attend and leave",
+    "MyRequest":"My Request",
     "previoustime":"previous dismissal time",
   "myrequest":"My Request"
-    ,"vacations":"vacations"
     ,"company":"Enterprise",
   "timeline":"time line",
     "Attendancetoday":"Attendance time today"

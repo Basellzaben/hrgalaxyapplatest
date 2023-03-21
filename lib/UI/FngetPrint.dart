@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,6 +17,7 @@ import '../Models/LocationM.dart';
 import '../Models/Time.dart';
 import '../Provider/LoginProvider.dart';
 import '../Provider/ThemeProvider.dart';
+import '../Provider/languageProvider.dart';
 import 'Index.dart';
 import 'Profile.dart';
 import 'Requests.dart';
@@ -142,7 +142,7 @@ try {
 
     DateTime now = DateTime.now();
     String formattedDate2 = DateFormat('EEE d MMM').format(now);
-
+    var LanguageProvider = Provider.of<Language>(context, listen: false);
     String formattedDate = DateFormat('kk:mm:ss').format(now);
     timee=formattedDate;
     datee=formattedDate2;
@@ -201,8 +201,8 @@ try {
     margin: EdgeInsets.only(top: 40, left: 5, right: 5),
     child: Text(
       transtype
-    ? "تسجيل الدخول"
-        : "تسجيل الخروج",
+    ? LanguageProvider.Llanguage('checkin')
+        : LanguageProvider.Llanguage('checkout'),
     style: TextStyle(
     color: HexColor(Globalvireables.white),
     fontSize: 33,
@@ -229,7 +229,8 @@ try {
       borderRadius: BorderRadius.circular(100)
       //more than 50% of width makes circle
       ),
-        child: Icon(Icons.cached,color:                                   HexColor(Globalvireables.white)
+        child: Icon(Icons.cached,color:
+        HexColor(Globalvireables.white)
           ,),
       ),
     )
@@ -293,7 +294,7 @@ try {
     fontSize: 50,
     fontWeight: FontWeight.w800,
     color:
-    themep.themeMode.backgroundColor),
+    themep.themeMode.primaryColor),
     ),
     ),
     ),
@@ -311,7 +312,7 @@ try {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(
     content: Text(
-    "يجب الانتظار لحين جلب الوقت..."),
+        LanguageProvider.Llanguage('loading')),
     ));
     }
     });
@@ -339,8 +340,7 @@ try {
     GestureDetector(
     onTap: () {
       Fluttertoast.showToast(
-          msg: 'يجب ان تكون ضمن نطاق المسافه المسموح بها '
-          ,
+          msg: LanguageProvider.Llanguage('distancerange'),
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           textColor: HexColor(Globalvireables.white),
@@ -354,7 +354,7 @@ try {
                 size: 200.0,
                 color: (Colors.black12),
               ),
-              Text('يجب ان تكون ضمن نطاق المسافه المسموح بها وهي '+Provider.of<LocationProvider>(context, listen: false).getsaefdistance()+' متر '
+              Text(LanguageProvider.Llanguage('distancerangeit')+Provider.of<LocationProvider>(context, listen: false).getsaefdistance()+LanguageProvider.Llanguage('metr')
               ),
             ],
           ),
@@ -573,6 +573,9 @@ getDistanceBetwenINM(String latc,String longc,double lat,double long){
 
 
 CheckInCheckOut(String IO) async {
+    String g='44';
+    int? x=0;
+    x=int.tryParse(g);
   //  O check out
   //  1 check in
   var apiUrl = Uri.parse(Globalvireables.check);

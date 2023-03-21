@@ -24,8 +24,6 @@ class Personalinfo {
     AttStatus = json['AttStatus'];
     YearsOfExp = json['YearsOfExp'];
     Email = json['Email'];
-
-
   }
 
   Map<String, dynamic> toJson() {
@@ -40,4 +38,5 @@ class Personalinfo {
     data['YearsOfExp'] = this.YearsOfExp;
     data['Email'] = this.Email;
     return data;
-  }}
+  }
+}

@@ -235,7 +235,7 @@ class _SettingsState extends State<Settings> {
 Spacer(),
          Container(
            alignment: Alignment.topLeft,
-             child: Text('اختيار الالوان')
+             child: Text(Provider.of<Language>(context, listen: false).Llanguage('selectcolor'))
          ),
 
        ],),
@@ -351,7 +351,7 @@ Spacer(),
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: HexColor(Globalvireables.black2),
+                    color: Colors.deepOrange,
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(100.0),
                         bottomRight: Radius.circular(100.0),
